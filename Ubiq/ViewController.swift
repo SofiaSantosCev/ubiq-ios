@@ -1,10 +1,4 @@
-//
-//  ViewController.swift
-//  Ubiq
-//
-//  Created by alumnos on 9/1/19.
-//  Copyright © 2019 alumnos. All rights reserved.
-//
+
 
 import UIKit
 
