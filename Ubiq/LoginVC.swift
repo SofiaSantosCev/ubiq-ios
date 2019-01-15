@@ -7,6 +7,7 @@ class LoginVC: UIViewController {
     @IBOutlet weak var linkRegistro: UIButton!
     @IBOutlet weak var loginBtn: UIButton!
     @IBOutlet weak var email: UITextField!
+    @IBOutlet weak var password: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -14,15 +15,8 @@ class LoginVC: UIViewController {
         email.layer.cornerRadius = 15
     }
     
-    @IBAction func email(_ sender: Any) {
-    
-    }
-    
-    @IBAction func password(_ sender: Any) {
-    
-    }
-    
     @IBAction func loginBtn(_ sender: Any) {
-        
+        //Comprobar datos del formulario con BBDD con peticion GET
     }
+
 }

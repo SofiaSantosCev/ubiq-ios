@@ -9,14 +9,18 @@ class PerfilVC: UIViewController {
     @IBOutlet weak var profileImage: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        //Asignar información del token a los label y la imagen.
     }
 
   
     @IBAction func BorrarBtn(_ sender: Any) {
+        performSegue(withIdentifier: "BorrarCuenta", sender: sender)
     }
     
-    @IBOutlet weak var LogOutBtn: UIButton!
     
-
+    @IBAction func LogOut(_ sender: Any) {
+        performSegue(withIdentifier: "LogOut", sender: sender)
+    }
+    
 }

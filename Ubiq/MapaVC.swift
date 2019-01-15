@@ -14,13 +14,21 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     
+    @IBAction func tapGesture(_ sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            let locationInView = sender.location(in: mapa)
+            let tappedCoordinate = mapa.convert(locationInView, toCoordinateFrom: mapa)
+            mapa.addAnnotation(tappedCoordinate as! MKAnnotation)
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         manager.startUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        //pin(localizacion: locations.first!)
-        indicaciones(localizacion: locations.first!)
+        pin(localizacion: locations.first!)
+        //indicaciones(localizacion: locations.first!)
     }
     
     func pin(localizacion: CLLocation) {
@@ -36,6 +44,8 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         anotacion.subtitle = "Maravilloso"
         mapa.addAnnotation(anotacion)
     }
+    
+    
     
     func indicaciones(localizacion: CLLocation) {
         //let coordenadasOrigen = CLLocationCoordinate2D(latitude: localizacion.coordinate.latitude, longitude: localizacion.coordinate.longitude)

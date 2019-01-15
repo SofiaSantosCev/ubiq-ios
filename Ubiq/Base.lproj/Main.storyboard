@@ -28,9 +28,6 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" textContentType="email"/>
-                                <connections>
-                                    <action selector="email:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="l9Z-3I-k28"/>
-                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5eD-aB-C4G">
                                 <rect key="frame" x="63" y="348" width="250" height="30"/>
@@ -41,16 +38,13 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" textContentType="password"/>
-                                <connections>
-                                    <action selector="password:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="2xj-OZ-h30"/>
-                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HlQ-v9-7to">
                                 <rect key="frame" x="101" y="557" width="174" height="32"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <state key="normal" title="¿Eres nuevo? Registrate"/>
                                 <connections>
-                                    <segue destination="lhr-yP-itm" kind="show" id="kf2-mS-DYQ"/>
+                                    <segue destination="lhr-yP-itm" kind="show" identifier="eresNuevo" id="dPj-lf-wpA"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YZE-fi-7CR">
@@ -104,6 +98,7 @@
                         <outlet property="email" destination="vLc-kM-ysi" id="s54-Zp-ngy"/>
                         <outlet property="linkRegistro" destination="HlQ-v9-7to" id="dXL-8R-X8h"/>
                         <outlet property="loginBtn" destination="YZE-fi-7CR" id="gzn-4M-elj"/>
+                        <outlet property="password" destination="5eD-aB-C4G" id="60Y-V3-06S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -178,6 +173,9 @@
                                                 <date key="date" timeIntervalSinceReferenceDate="568833718.33393502">
                                                     <!--2019-01-10 17:21:58 +0000-->
                                                 </date>
+                                                <connections>
+                                                    <action selector="fechaInicio:" destination="n5q-rV-cHa" eventType="valueChanged" id="VDc-Dj-6hz"/>
+                                                </connections>
                                             </datePicker>
                                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Dft-ET-Jyn">
                                                 <rect key="frame" x="28" y="529" width="320" height="162"/>
@@ -187,6 +185,9 @@
                                                 <date key="date" timeIntervalSinceReferenceDate="568833723.09647095">
                                                     <!--2019-01-10 17:22:03 +0000-->
                                                 </date>
+                                                <connections>
+                                                    <action selector="fechaFin:" destination="n5q-rV-cHa" eventType="valueChanged" id="KDb-lX-ABD"/>
+                                                </connections>
                                             </datePicker>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s9e-Vd-dcX">
                                                 <rect key="frame" x="132" y="1234" width="111" height="30"/>
@@ -207,20 +208,16 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T2G-uB-PvS">
-                                                <rect key="frame" x="0.0" y="8" width="375" height="44"/>
-                                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="barTintColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <items>
-                                                    <navigationItem title="Nueva ubicación" id="DfC-es-622"/>
-                                                </items>
-                                            </navigationBar>
                                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="KS8-d3-r8k">
                                                 <rect key="frame" x="0.0" y="1024" width="375" height="177"/>
+                                                <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="375" id="3hR-y6-KmS"/>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="375" id="bx8-Ge-Aya"/>
                                                 </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="IHe-GK-fKi" appends="YES" id="bvD-lO-amy"/>
+                                                </connections>
                                             </mapView>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XsE-C8-Sfm">
                                                 <rect key="frame" x="289" y="713" width="53" height="30"/>
@@ -242,7 +239,6 @@
                                             <constraint firstItem="FIR-K3-cah" firstAttribute="top" secondItem="0H4-Jb-pjK" secondAttribute="bottom" constant="61" id="HQt-q0-TLh"/>
                                             <constraint firstItem="JEt-es-Uco" firstAttribute="leading" secondItem="yJf-KW-zIU" secondAttribute="leading" constant="16" id="JBg-hg-Cw7"/>
                                             <constraint firstItem="Dft-ET-Jyn" firstAttribute="centerX" secondItem="yJf-KW-zIU" secondAttribute="centerX" id="Jhz-56-6mm"/>
-                                            <constraint firstItem="T2G-uB-PvS" firstAttribute="top" secondItem="yJf-KW-zIU" secondAttribute="topMargin" id="KYO-UE-D4F"/>
                                             <constraint firstItem="JEt-es-Uco" firstAttribute="top" secondItem="Dft-ET-Jyn" secondAttribute="bottom" constant="26" id="Nwe-jP-rKq"/>
                                             <constraint firstItem="Heb-0W-uTc" firstAttribute="top" secondItem="vRr-qT-h0H" secondAttribute="bottom" constant="31" id="Ob6-bR-QAB"/>
                                             <constraint firstItem="QIR-EB-oHu" firstAttribute="centerX" secondItem="yJf-KW-zIU" secondAttribute="centerX" id="On0-gR-n34"/>
@@ -257,8 +253,6 @@
                                             <constraint firstItem="0H4-Jb-pjK" firstAttribute="top" secondItem="JEt-es-Uco" secondAttribute="bottom" constant="8" id="fJV-gb-bhD"/>
                                             <constraint firstItem="KS8-d3-r8k" firstAttribute="centerX" secondItem="yJf-KW-zIU" secondAttribute="centerX" id="q5t-2i-SBS"/>
                                             <constraint firstAttribute="trailing" secondItem="0H4-Jb-pjK" secondAttribute="trailing" id="smT-yJ-ZQL"/>
-                                            <constraint firstItem="KS8-d3-r8k" firstAttribute="trailing" secondItem="T2G-uB-PvS" secondAttribute="trailing" id="wq1-HD-MST"/>
-                                            <constraint firstItem="KS8-d3-r8k" firstAttribute="leading" secondItem="T2G-uB-PvS" secondAttribute="leading" id="xVn-R6-05p"/>
                                             <constraint firstAttribute="bottom" secondItem="s9e-Vd-dcX" secondAttribute="bottom" constant="36" id="zMT-ej-Z2S"/>
                                             <constraint firstItem="vRr-qT-h0H" firstAttribute="top" secondItem="wMZ-bY-BFK" secondAttribute="bottom" constant="32" id="zf2-d0-5jb"/>
                                             <constraint firstItem="wMZ-bY-BFK" firstAttribute="leading" secondItem="Heb-0W-uTc" secondAttribute="leading" id="zjv-YN-KbR"/>
@@ -272,13 +266,24 @@
                                     <constraint firstItem="yJf-KW-zIU" firstAttribute="top" secondItem="y9I-rE-IV7" secondAttribute="top" id="t5P-2P-2GH"/>
                                 </constraints>
                             </scrollView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T2G-uB-PvS">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <items>
+                                    <navigationItem title="Nueva ubicación" id="DfC-es-622"/>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="yJf-KW-zIU" firstAttribute="width" secondItem="bYv-28-Clq" secondAttribute="width" id="2K6-EM-Jg7"/>
                             <constraint firstItem="y9I-rE-IV7" firstAttribute="leading" secondItem="fQQ-42-1hV" secondAttribute="leading" id="8Ae-3b-xfI"/>
+                            <constraint firstItem="T2G-uB-PvS" firstAttribute="top" secondItem="bYv-28-Clq" secondAttribute="topMargin" id="C0o-eX-8bT"/>
+                            <constraint firstItem="KS8-d3-r8k" firstAttribute="leading" secondItem="T2G-uB-PvS" secondAttribute="leading" id="HuH-Qn-1pL"/>
                             <constraint firstItem="fQQ-42-1hV" firstAttribute="bottom" secondItem="y9I-rE-IV7" secondAttribute="bottom" id="Oeh-x8-elA"/>
                             <constraint firstItem="fQQ-42-1hV" firstAttribute="trailing" secondItem="y9I-rE-IV7" secondAttribute="trailing" id="SVg-fb-iqr"/>
+                            <constraint firstItem="KS8-d3-r8k" firstAttribute="trailing" secondItem="T2G-uB-PvS" secondAttribute="trailing" id="Wcp-Kq-Qtr"/>
                             <constraint firstItem="y9I-rE-IV7" firstAttribute="top" secondItem="fQQ-42-1hV" secondAttribute="top" id="xJJ-d3-FAr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fQQ-42-1hV"/>
@@ -286,17 +291,18 @@
                     <tabBarItem key="tabBarItem" title="Crear" id="Imb-pN-Ny6"/>
                     <size key="freeformSize" width="375" height="1500"/>
                     <connections>
-                        <outlet property="FechaFin" destination="Dft-ET-Jyn" id="p1n-eE-yDO"/>
-                        <outlet property="FechaInicio" destination="vRr-qT-h0H" id="bJA-8J-Fo3"/>
                         <outlet property="btn" destination="s9e-Vd-dcX" id="fdd-28-BTA"/>
                         <outlet property="change" destination="XsE-C8-Sfm" id="hAt-sl-9dx"/>
                         <outlet property="descripcion" destination="w9O-mL-vgW" id="ngx-Ng-1sh"/>
+                        <outlet property="fechaFin" destination="Dft-ET-Jyn" id="e0N-pd-kdQ"/>
+                        <outlet property="fechaInicio" destination="vRr-qT-h0H" id="KwB-VR-9wq"/>
                         <outlet property="image" destination="0H4-Jb-pjK" id="ETP-sw-8tm"/>
                         <outlet property="mapa" destination="KS8-d3-r8k" id="sJe-fN-rsd"/>
                         <outlet property="titulo" destination="QIR-EB-oHu" id="CBF-X2-YjW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gF9-DU-a8v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="IHe-GK-fKi"/>
             </objects>
             <point key="canvasLocation" x="1180" y="3345"/>
         </scene>
@@ -363,7 +369,8 @@
                                     <color key="titleColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="gDM-30-npR"/>
+                                    <action selector="LogOut:" destination="Zjl-dq-0ld" eventType="touchUpInside" id="C18-8r-PQX"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="LogOut" id="gDM-30-npR"/>
                                 </connections>
                             </button>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9C-dV-xDS">
@@ -382,7 +389,7 @@
                                 </state>
                                 <connections>
                                     <action selector="BorrarBtn:" destination="Zjl-dq-0ld" eventType="touchUpInside" id="on1-na-828"/>
-                                    <segue destination="lhr-yP-itm" kind="show" id="xpu-al-MzO"/>
+                                    <segue destination="lhr-yP-itm" kind="show" identifier="BorrarCuenta" id="xpu-al-MzO"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -414,7 +421,6 @@
                     <navigationItem key="navigationItem" title="Mi perfil" id="s8B-Kd-dXq"/>
                     <connections>
                         <outlet property="Email" destination="pDB-37-dm6" id="l5T-8l-5JC"/>
-                        <outlet property="LogOutBtn" destination="piw-Nl-ljr" id="6Pw-Nx-n3j"/>
                         <outlet property="Name" destination="Zz6-b9-9oA" id="CE1-j5-tfM"/>
                         <outlet property="profileImage" destination="AkE-uh-38V" id="MwJ-gG-nwO"/>
                     </connections>
@@ -607,7 +613,6 @@
         <!--Mapa-->
         <scene sceneID="uSN-Ch-r37">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5nf-nG-VGG" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="kGa-Fa-irr" customClass="MapaVC" customModule="Ubiq" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HUW-OF-EZ0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
@@ -616,6 +621,10 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WLk-C5-Jne">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="cnd-Xk-fh5" appends="YES" id="F58-s6-0yu"/>
+                                </connections>
                             </mapView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="JU2-oN-ujN">
                                 <rect key="frame" x="0.0" y="64" width="375" height="56"/>
@@ -640,6 +649,12 @@
                         <outlet property="mapa" destination="WLk-C5-Jne" id="cZ8-KV-5pP"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5nf-nG-VGG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="cnd-Xk-fh5">
+                    <connections>
+                        <action selector="tapGesture:" destination="kGa-Fa-irr" id="9EH-hb-uLp"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-946.39999999999998" y="2969.8650674662672"/>
         </scene>
@@ -682,9 +697,6 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="name:" destination="lhr-yP-itm" eventType="editingDidEnd" id="w3u-u3-PAe"/>
-                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nbH-9O-I3H">
                                 <rect key="frame" x="62" y="353" width="250" height="30"/>
@@ -694,9 +706,6 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" textContentType="email"/>
-                                <connections>
-                                    <action selector="email:" destination="lhr-yP-itm" eventType="editingDidEnd" id="LM2-Nt-xdo"/>
-                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KQb-vd-m6J">
                                 <rect key="frame" x="62" y="415" width="250" height="30"/>
@@ -706,9 +715,6 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" textContentType="password"/>
-                                <connections>
-                                    <action selector="password:" destination="lhr-yP-itm" eventType="editingDidEnd" id="K5b-80-u7a"/>
-                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TXC-re-7B9">
                                 <rect key="frame" x="112" y="497" width="150" height="30"/>
@@ -762,6 +768,9 @@
                     </view>
                     <connections>
                         <outlet property="Registrobtn" destination="TXC-re-7B9" id="PBW-PK-J2C"/>
+                        <outlet property="email" destination="nbH-9O-I3H" id="Gmd-2c-vF0"/>
+                        <outlet property="name" destination="Btm-hV-1Ps" id="ewA-4K-ib6"/>
+                        <outlet property="password" destination="KQb-vd-m6J" id="rF4-tj-HKl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mdR-6f-AfZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -770,9 +779,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="xpu-al-MzO"/>
+        <segue reference="dPj-lf-wpA"/>
         <segue reference="x2f-IA-LjG"/>
-        <segue reference="gDM-30-npR"/>
+        <segue reference="BJP-cT-dty"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

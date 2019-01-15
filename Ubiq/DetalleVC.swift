@@ -11,7 +11,7 @@ class DetalleVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
        
     }
 

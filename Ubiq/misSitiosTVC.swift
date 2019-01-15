@@ -3,7 +3,7 @@ import UIKit
 
 class misSitiosTVC: UITableViewController {
 
-    var sitios = [Sitio]() //Array contenedora de ubicaciones
+    var sitios = [Sitio]() //Array contenedora de ubicaciones procedentes de la BBDD
     
     override func viewDidLoad() {
         super.viewDidLoad()
