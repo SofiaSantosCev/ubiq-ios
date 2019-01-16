@@ -1,15 +1,28 @@
 
 import UIKit
 
+var sitios = [Sitio]()
 class misSitiosTVC: UITableViewController {
-
-    var sitios = [Sitio]() //Array contenedora de ubicaciones procedentes de la BBDD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //listaSitios()
         
     }
 
+    func listaSitios(){
+        let url = URL(string: "")
+        
+        URLSession.shared.dataTask(with: url!){
+            (data, response, error) in
+            do {
+                sitios = try JSONDecoder().decode([Sitio].self, from: data!)
+            } catch let error {
+                print(error)
+            }
+        }.resume()
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

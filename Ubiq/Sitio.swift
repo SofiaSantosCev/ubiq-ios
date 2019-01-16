@@ -1,21 +1,24 @@
 
 
-import Foundation
 import UIKit
 
-class Sitio {
+class Sitio: Decodable {
     
     var titulo: String?
     var descripcion: String?
-    var image: UIImage?
     var dateDesde: String?
     var dateHasta: String?
+    var longitude: Double?
+    var latitude: Double?
     
-    init(titulo: String, descripcion: String, image: UIImage, dateDesde: String, dateHasta: String) {
+    init(titulo: String, descripcion: String, dateDesde: String, dateHasta: String, longitude: Double, latitude: Double) {
         self.titulo = titulo
         self.descripcion = descripcion
-        self.image = image
         self.dateDesde = dateDesde
         self.dateHasta = dateHasta
+        self.latitude = latitude
+        self.longitude = longitude
     }
+    
+    
 }

@@ -44,7 +44,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <state key="normal" title="¿Eres nuevo? Registrate"/>
                                 <connections>
-                                    <segue destination="lhr-yP-itm" kind="show" identifier="eresNuevo" id="dPj-lf-wpA"/>
+                                    <segue destination="lhr-yP-itm" kind="show" id="oxD-pp-MxA"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YZE-fi-7CR">
@@ -96,7 +96,6 @@
                     </view>
                     <connections>
                         <outlet property="email" destination="vLc-kM-ysi" id="s54-Zp-ngy"/>
-                        <outlet property="linkRegistro" destination="HlQ-v9-7to" id="dXL-8R-X8h"/>
                         <outlet property="loginBtn" destination="YZE-fi-7CR" id="gzn-4M-elj"/>
                         <outlet property="password" destination="5eD-aB-C4G" id="60Y-V3-06S"/>
                     </connections>
@@ -120,20 +119,20 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1300"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Titulo" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QIR-EB-oHu">
-                                                <rect key="frame" x="38" y="71" width="300" height="30"/>
+                                                <rect key="frame" x="28" y="71" width="320" height="30"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="300" id="Nht-ur-jgm"/>
+                                                    <constraint firstAttribute="width" constant="320" id="Nht-ur-jgm"/>
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Descripción" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w9O-mL-vgW">
-                                                <rect key="frame" x="38" y="120" width="300" height="100"/>
+                                                <rect key="frame" x="28" y="120" width="320" height="100"/>
                                                 <color key="tintColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="100" id="4K1-B0-mpe"/>
-                                                    <constraint firstAttribute="width" constant="300" id="jqw-xN-YOR"/>
+                                                    <constraint firstAttribute="width" constant="320" id="jqw-xN-YOR"/>
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -618,13 +617,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WLk-C5-Jne">
-                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WLk-C5-Jne">
+                                <rect key="frame" x="0.0" y="120" width="375" height="498"/>
                                 <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="cnd-Xk-fh5" appends="YES" id="F58-s6-0yu"/>
-                                </connections>
                             </mapView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="JU2-oN-ujN">
                                 <rect key="frame" x="0.0" y="64" width="375" height="56"/>
@@ -634,8 +629,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="WLk-C5-Jne" firstAttribute="bottom" secondItem="rgX-R5-61b" secondAttribute="bottom" id="6wU-JT-UgJ"/>
+                            <constraint firstItem="WLk-C5-Jne" firstAttribute="top" secondItem="JU2-oN-ujN" secondAttribute="bottom" id="F4y-tx-jCm"/>
                             <constraint firstItem="JU2-oN-ujN" firstAttribute="trailing" secondItem="rgX-R5-61b" secondAttribute="trailing" id="FqI-sl-Pou"/>
+                            <constraint firstItem="WLk-C5-Jne" firstAttribute="leading" secondItem="rgX-R5-61b" secondAttribute="leading" id="ICz-HR-c21"/>
                             <constraint firstItem="JU2-oN-ujN" firstAttribute="leading" secondItem="rgX-R5-61b" secondAttribute="leading" id="JgA-8k-gPd"/>
+                            <constraint firstItem="WLk-C5-Jne" firstAttribute="trailing" secondItem="rgX-R5-61b" secondAttribute="trailing" id="LUQ-Q0-k7E"/>
                             <constraint firstItem="JU2-oN-ujN" firstAttribute="centerX" secondItem="HUW-OF-EZ0" secondAttribute="centerX" id="PYn-iB-l4q"/>
                             <constraint firstItem="JU2-oN-ujN" firstAttribute="top" secondItem="rgX-R5-61b" secondAttribute="top" id="S5a-pG-SZH"/>
                         </constraints>
@@ -646,7 +645,7 @@
                     </tabBarItem>
                     <navigationItem key="navigationItem" title="Mapa" id="KWq-1d-4XY"/>
                     <connections>
-                        <outlet property="mapa" destination="WLk-C5-Jne" id="cZ8-KV-5pP"/>
+                        <outlet property="mapa" destination="WLk-C5-Jne" id="OeX-12-gQr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5nf-nG-VGG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -779,7 +778,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dPj-lf-wpA"/>
+        <segue reference="oxD-pp-MxA"/>
         <segue reference="x2f-IA-LjG"/>
         <segue reference="BJP-cT-dty"/>
     </inferredMetricsTieBreakers>

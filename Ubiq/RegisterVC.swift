@@ -16,7 +16,37 @@ class RegisterVC: UIViewController {
     }
     
     @IBAction func registroBtn(_ sender: Any) {
-        //Guardar datos del formulario en BBDD con peticion POST
+        //peticionPost()
         
     }
+    
+    func peticionPost(){
+        let urlRegister = URL(string: "")
+        var postRequest = URLRequest(url: urlRegister!)
+        postRequest.httpMethod = "POST"
+        
+        let parameters = ["name" : name.text,
+                          "email" : email.text,
+                          "password" : password.text]
+        
+        do {
+            postRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .sortedKeys)
+        } catch {
+            print("Error al pasar el JSON")
+        }
+        
+        postRequest.addValue("appliction/json", forHTTPHeaderField: "Content-type")
+        postRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        URLSession.shared.dataTask(with: postRequest) { (data, response, error) in
+            if error == nil {
+                print("Usuario creado")
+            } else {
+                print(error ?? "Error")
+            }
+            
+        }.resume()
+        
+    }
+    
 }

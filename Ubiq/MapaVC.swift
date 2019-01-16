@@ -4,6 +4,7 @@ import MapKit
 
 class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
+    
     @IBOutlet weak var mapa: MKMapView!
     let manager = CLLocationManager()
     
@@ -13,14 +14,6 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         manager.requestWhenInUseAuthorization()
     }
     
-    
-    @IBAction func tapGesture(_ sender: UITapGestureRecognizer) {
-        if sender.state == .ended {
-            let locationInView = sender.location(in: mapa)
-            let tappedCoordinate = mapa.convert(locationInView, toCoordinateFrom: mapa)
-            mapa.addAnnotation(tappedCoordinate as! MKAnnotation)
-        }
-    }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         manager.startUpdatingLocation()
@@ -38,14 +31,17 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         let region = MKCoordinateRegion(center: localizacion.coordinate, span: span)
         mapa.setRegion(region, animated: true)
         
+        //Crear un pin por cada sitio guardado en la lista de sitios
+        for sitios in sitios {
+            
+        }
+        
         let anotacion = MKPointAnnotation()
         anotacion.coordinate = localizacion.coordinate
         anotacion.title = "Sitio"
         anotacion.subtitle = "Maravilloso"
         mapa.addAnnotation(anotacion)
     }
-    
-    
     
     func indicaciones(localizacion: CLLocation) {
         //let coordenadasOrigen = CLLocationCoordinate2D(latitude: localizacion.coordinate.latitude, longitude: localizacion.coordinate.longitude)

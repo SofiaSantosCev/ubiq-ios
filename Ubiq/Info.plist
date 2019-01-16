@@ -45,6 +45,8 @@
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict/>
+	<key>Allow Arbitrary Loads</key>
+	<true/>
 	<key>NSLocationUsageDescription</key>
 	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
