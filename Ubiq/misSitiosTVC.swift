@@ -7,7 +7,7 @@ class misSitiosTVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //listaSitios()
-        
+        sitios.append(Sitio(titulo: "Plaza del dos de mayo", descripcion: "Plaza preciosa", dateDesde: "20-12-1999", dateHasta: "22-12-2000", longitude: 40.426739, latitude: -3.703923))
     }
 
     func listaSitios(){

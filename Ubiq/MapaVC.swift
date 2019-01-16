@@ -12,6 +12,7 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         super.viewDidLoad()
         manager.delegate = self
         manager.requestWhenInUseAuthorization()
+        
         sitios.append(CLLocationCoordinate2D(latitude: 40.395078, longitude: -3.649885))
         sitios.append(CLLocationCoordinate2D(latitude: 40.397642, longitude: -3.654908))
         

@@ -3,7 +3,8 @@
 import UIKit
 import MapKit
 
-class nuevaUbicacionVC: UIViewController {
+class nuevaUbicacionVC: UIViewController, UIImagePickerControllerDelegate,
+UINavigationControllerDelegate {
     @IBOutlet weak var descripcion: UITextField!
     @IBOutlet weak var btn: UIButton!
     @IBOutlet weak var titulo: UITextField!
@@ -91,4 +92,28 @@ class nuevaUbicacionVC: UIViewController {
             destination.image.image = nuevo.image.image
         }
     }
+    
+    @IBAction func openCameraButton(sender: AnyObject) {
+        var imagePicker = UIImagePickerController()
+        
+            
+            if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
+                print("Button capture")
+                
+                imagePicker.delegate = self
+                imagePicker.sourceType = .savedPhotosAlbum;
+                imagePicker.allowsEditing = false
+                
+                self.present(imagePicker, animated: true, completion: nil)
+            }
+        }
+        
+        func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
+            self.dismiss(animated: true, completion: { () -> Void in
+                
+            })
+            
+            self.image.image = image
+        }
+    
 }

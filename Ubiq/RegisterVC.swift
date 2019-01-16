@@ -16,7 +16,7 @@ class RegisterVC: UIViewController {
     }
     
     @IBAction func registroBtn(_ sender: Any) {
-        peticionPost()
+        //peticionPost()
         
     }
     

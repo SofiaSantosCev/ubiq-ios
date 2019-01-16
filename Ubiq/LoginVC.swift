@@ -14,7 +14,7 @@ class LoginVC: UIViewController {
     }
     
     @IBAction func loginBtn(_ sender: Any) {
-        peticionPost()
+        //peticionPost()
     }
 
     func peticionPost(){
@@ -22,8 +22,8 @@ class LoginVC: UIViewController {
         var postRequest = URLRequest(url: url!)
         postRequest.httpMethod = "POST"
         
-        let parameters = ["email" : email.text,
-                          "password" : password.text]
+        let parameters = ["email": email.text,
+                          "password": password.text]
         
         do {
             postRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .sortedKeys)

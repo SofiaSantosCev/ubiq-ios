@@ -48,10 +48,14 @@
 	<key>Allow Arbitrary Loads</key>
 	<true/>
 	<key>NSLocationUsageDescription</key>
-	<string></string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>¿Permites que est aaplicacion use tu localizacion?</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string></string>
+	<string>¿Permites que est aaplicacion use tu localizacion?</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>¿Permites que est aaplicacion use tu localizacion?</string>
+	<key>NSCameraUsageDescription</key>
+	<string>To take Photo</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>To show photo</string>
 </dict>
 </plist>
