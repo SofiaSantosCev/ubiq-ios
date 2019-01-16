@@ -3,18 +3,18 @@
 import UIKit
 import MapKit
 
-class nuevaUbicacionVC: UIViewController, UIGestureRecognizerDelegate {
+class nuevaUbicacionVC: UIViewController {
     @IBOutlet weak var descripcion: UITextField!
     @IBOutlet weak var btn: UIButton!
     @IBOutlet weak var titulo: UITextField!
     @IBOutlet weak var image: UIImageView!
-    @IBOutlet weak var mapa: MKMapView!
     @IBOutlet weak var change: UIButton!
     @IBOutlet weak var fechaInicio: UIDatePicker!
     @IBOutlet weak var fechaFin: UIDatePicker!
     
     var dateInicio: String?
     var dateFin: String?
+    var coordenadas:CLLocationCoordinate2D?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,27 +22,19 @@ class nuevaUbicacionVC: UIViewController, UIGestureRecognizerDelegate {
         descripcion.borderStyle = UITextBorderStyle.roundedRect
         btn.layer.cornerRadius = 15
         
-        var imagen: UIImage
-        var coor_x: CLLocationCoordinate2D
-        var coor_y: CLLocationCoordinate2D
-        
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: "TriggerTouchAction:")
-        mapa.addGestureRecognizer(gestureRecognizer)
     }
     
     //Convierte la fecha seleccionada en el datePicker a string y la guarda en una variable externa
     @IBAction func fechaInicio(_ sender: Any) {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
+        dateFormatter.dateFormat = "dd-MM-yyyy"
         let strDate = dateFormatter.string(from: fechaInicio.date)
         self.dateInicio = strDate
     }
 
     @IBAction func fechaFin(_ sender: Any) {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
+        dateFormatter.dateFormat = "dd-MM-yyyy"
         let strDate = dateFormatter.string(from: fechaFin.date)
         self.dateFin = strDate
     }
@@ -56,9 +48,9 @@ class nuevaUbicacionVC: UIViewController, UIGestureRecognizerDelegate {
         performSegue(withIdentifier: "create", sender: sender)
         
         peticionPost()
-        
     }
     
+    //Enviar datos a la api
     func peticionPost(){
         let url = URL(string: "")
         var postRequest = URLRequest(url: url!)
@@ -83,7 +75,7 @@ class nuevaUbicacionVC: UIViewController, UIGestureRecognizerDelegate {
                 print(error ?? "Error")
             }
             
-            }.resume()
+        }.resume()
         
     }
     
@@ -99,5 +91,4 @@ class nuevaUbicacionVC: UIViewController, UIGestureRecognizerDelegate {
             destination.image.image = nuevo.image.image
         }
     }
-   
 }

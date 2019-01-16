@@ -3,74 +3,45 @@ import UIKit
 import MapKit
 
 class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
-
     
     @IBOutlet weak var mapa: MKMapView!
     let manager = CLLocationManager()
+    var sitios = [CLLocationCoordinate2D]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         manager.delegate = self
         manager.requestWhenInUseAuthorization()
-    }
-    
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        manager.startUpdatingLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        pin(localizacion: locations.first!)
-        //indicaciones(localizacion: locations.first!)
-    }
-    
-    func pin(localizacion: CLLocation) {
+        sitios.append(CLLocationCoordinate2D(latitude: 40.395078, longitude: -3.649885))
+        sitios.append(CLLocationCoordinate2D(latitude: 40.397642, longitude: -3.654908))
         
-        //let localizacion = CLLocationCoordinate2DMake(40, -4)
-        let span = MKCoordinateSpanMake(0.02, 0.02)
-        let region = MKCoordinateRegion(center: localizacion.coordinate, span: span)
-        mapa.setRegion(region, animated: true)
-        
-        //Crear un pin por cada sitio guardado en la lista de sitios
-        for sitios in sitios {
-            
+        for sitio in sitios {
+            pin(localizacion: sitio)
         }
         
+        self.manager.requestAlwaysAuthorization()
+    
+        if CLLocationManager.locationServicesEnabled() {
+            manager.delegate = self
+            manager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            manager.startUpdatingLocation()
+        }
+    }
+    
+    //poner chincheta
+    func pin(localizacion: CLLocationCoordinate2D){
+        let span = MKCoordinateSpanMake(0.02, 0.02)
+        let region = MKCoordinateRegion(center: localizacion, span: span)
+        mapa.setRegion(region, animated: true)
+        
+        //marcador
         let anotacion = MKPointAnnotation()
-        anotacion.coordinate = localizacion.coordinate
-        anotacion.title = "Sitio"
-        anotacion.subtitle = "Maravilloso"
+        anotacion.coordinate = localizacion
         mapa.addAnnotation(anotacion)
     }
     
-    func indicaciones(localizacion: CLLocation) {
-        //let coordenadasOrigen = CLLocationCoordinate2D(latitude: localizacion.coordinate.latitude, longitude: localizacion.coordinate.longitude)
-        mapa.delegate = self
-        let coordenadasOrigen = CLLocationCoordinate2DMake(25.0305, 121.5360)
-        let coordenadasDestino = CLLocationCoordinate2DMake(24.9511, 121.2358)
-        mapa.setRegion(MKCoordinateRegionMake(coordenadasOrigen, MKCoordinateSpanMake(0.7,0.7)), animated: true)
-        let origen = MKMapItem(placemark: MKPlacemark(coordinate: coordenadasOrigen))
-        let destino = MKMapItem(placemark: MKPlacemark(coordinate: coordenadasDestino))
-        let peticion = MKDirectionsRequest()
-        peticion.source = origen
-        peticion.destination = destino
-        peticion.transportType = .any
-        
-        let indicaciones = MKDirections(request: peticion)
-        indicaciones.calculate { (respuesta, error) in
-            if let error = error {
-                print(error.localizedDescription)
-            } else {
-                self.mapa.add((respuesta?.routes[0].polyline)!)
-            }
-        }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
     }
-    
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay)->MKOverlayRenderer {
-        let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = UIColor.blue
-        renderer.lineWidth = 4
-        return renderer
-    }
-
 }

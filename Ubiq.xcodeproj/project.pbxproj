@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F23B58D21EF866A00DA4093 /* MapaCrearSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F23B58C21EF866A00DA4093 /* MapaCrearSpot.swift */; };
 		7F97BFFF21E6582900F4F562 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97BFFE21E6582900F4F562 /* RegisterVC.swift */; };
 		7F97C00121E6584B00F4F562 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97C00021E6584B00F4F562 /* LoginVC.swift */; };
 		7F97C00321E6589300F4F562 /* misSitiosTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97C00221E6589300F4F562 /* misSitiosTVC.swift */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		1EDAF1861881FEAF6E9BA6F6 /* Pods-Ubiq.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ubiq.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ubiq/Pods-Ubiq.debug.xcconfig"; sourceTree = "<group>"; };
+		7F23B58C21EF866A00DA4093 /* MapaCrearSpot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapaCrearSpot.swift; sourceTree = "<group>"; };
 		7F97BFFE21E6582900F4F562 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		7F97C00021E6584B00F4F562 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		7F97C00221E6589300F4F562 /* misSitiosTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = misSitiosTVC.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				7F97C00221E6589300F4F562 /* misSitiosTVC.swift */,
 				7F97C00421E658AB00F4F562 /* misSitiosTVCell.swift */,
 				7F97C00821E659D400F4F562 /* nuevaUbicacionVC.swift */,
+				7F23B58C21EF866A00DA4093 /* MapaCrearSpot.swift */,
 				7F97C00621E6598C00F4F562 /* DetalleVC.swift */,
 				7F9B31DE21E7A1B40043E59E /* PerfilVC.swift */,
 				7F97C00A21E66DA600F4F562 /* Sitio.swift */,
@@ -189,15 +192,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Ubiq-checkManifestLockResult.txt",
 			);
@@ -211,15 +210,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Ubiq/Pods-Ubiq-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 			);
@@ -243,6 +238,7 @@
 				7F97C00121E6584B00F4F562 /* LoginVC.swift in Sources */,
 				7F97C00921E659D400F4F562 /* nuevaUbicacionVC.swift in Sources */,
 				7F9F59A721E6261A004B88D2 /* AppDelegate.swift in Sources */,
+				7F23B58D21EF866A00DA4093 /* MapaCrearSpot.swift in Sources */,
 				7F97C00321E6589300F4F562 /* misSitiosTVC.swift in Sources */,
 				7F9B31DF21E7A1B40043E59E /* PerfilVC.swift in Sources */,
 				7F97C00721E6598C00F4F562 /* DetalleVC.swift in Sources */,

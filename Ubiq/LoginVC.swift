@@ -14,11 +14,11 @@ class LoginVC: UIViewController {
     }
     
     @IBAction func loginBtn(_ sender: Any) {
-        //peticionPost()
+        peticionPost()
     }
 
     func peticionPost(){
-        let url = URL(string: "")
+        let url = URL(string: "localhost:8888/ubiq/public/index.php/login")
         var postRequest = URLRequest(url: url!)
         postRequest.httpMethod = "POST"
         

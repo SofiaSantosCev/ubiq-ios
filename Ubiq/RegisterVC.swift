@@ -16,12 +16,12 @@ class RegisterVC: UIViewController {
     }
     
     @IBAction func registroBtn(_ sender: Any) {
-        //peticionPost()
+        peticionPost()
         
     }
     
     func peticionPost(){
-        let urlRegister = URL(string: "")
+        let urlRegister = URL(string: "localhost:8888/ubiq/public/index.php/register")
         var postRequest = URLRequest(url: urlRegister!)
         postRequest.httpMethod = "POST"
         
