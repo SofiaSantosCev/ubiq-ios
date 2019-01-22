@@ -1,26 +1,20 @@
 
 import UIKit
+import Alamofire
 
 var sitios = [Sitio]()
 class misSitiosTVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //listaSitios()
-        sitios.append(Sitio(titulo: "Plaza del dos de mayo", descripcion: "Plaza preciosa", dateDesde: "20-12-1999", dateHasta: "22-12-2000", longitude: 40.426739, latitude: -3.703923))
+        listaSitios()
     }
 
     func listaSitios(){
-        let url = URL(string: "")
-        
-        URLSession.shared.dataTask(with: url!){
-            (data, response, error) in
-            do {
-                sitios = try JSONDecoder().decode([Sitio].self, from: data!)
-            } catch let error {
-                print(error)
-            }
-        }.resume()
+        Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/location", method: .get, encoding: URLEncoding.httpBody)
+            .responseJSON { response in
+               response.description
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -37,7 +31,6 @@ class misSitiosTVC: UITableViewController {
         cell.name.text = sitios[indexPath.row].titulo
         cell.fechaDesde.text = sitios[indexPath.row].dateDesde
         cell.fechaHasta.text = sitios[indexPath.row].dateHasta
-
         return cell
     }
     

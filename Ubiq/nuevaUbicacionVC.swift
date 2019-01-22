@@ -2,6 +2,7 @@
 
 import UIKit
 import MapKit
+import Alamofire
 
 class nuevaUbicacionVC: UIViewController, UIImagePickerControllerDelegate,
 UINavigationControllerDelegate {
@@ -53,31 +54,17 @@ UINavigationControllerDelegate {
     
     //Enviar datos a la api
     func peticionPost(){
-        let url = URL(string: "")
-        var postRequest = URLRequest(url: url!)
-        postRequest.httpMethod = "POST"
+        let parameters = ["name" : titulo.text!,
+                          "description" : descripcion.text!,
+                          "x_coordinate" : coordenadas?.longitude,
+                          "y_coordinate" : coordenadas?.latitude,
+                          "start_date" : fechaInicio.date,
+                          "end_date" : fechaFin.date] as [String : Any]
         
-        let parameters = ["titulo" : titulo.text,
-                          "descripcion" : descripcion.text]
-        
-        do {
-            postRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .sortedKeys)
-        } catch {
-            print("Error al pasar el JSON")
+        Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/register", method: .post, parameters: parameters, encoding: URLEncoding.httpBody)
+            .responseJSON { response in
+                print(response.result.value)
         }
-        
-        postRequest.addValue("appliction/json", forHTTPHeaderField: "Content-type")
-        postRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-        
-        URLSession.shared.dataTask(with: postRequest) { (data, response, error) in
-            if error == nil {
-                print("Usuario creado")
-            } else {
-                print(error ?? "Error")
-            }
-            
-        }.resume()
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -94,7 +81,7 @@ UINavigationControllerDelegate {
     }
     
     @IBAction func openCameraButton(sender: AnyObject) {
-        var imagePicker = UIImagePickerController()
+        let imagePicker = UIImagePickerController()
         
             
             if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){

@@ -1,11 +1,13 @@
 
 import UIKit
+import Alamofire
 
 class LoginVC: UIViewController {
 
     @IBOutlet weak var loginBtn: UIButton!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
+    var isLoggedIn:Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -14,34 +16,37 @@ class LoginVC: UIViewController {
     }
     
     @IBAction func loginBtn(_ sender: Any) {
-        //peticionPost()
+        peticionPost(sender: sender)
     }
 
-    func peticionPost(){
-        let url = URL(string: "localhost:8888/ubiq/public/index.php/login")
-        var postRequest = URLRequest(url: url!)
-        postRequest.httpMethod = "POST"
+    func peticionPost(sender: Any){
+        let parameters = ["email" : email.text!,
+                          "password" : password.text!]
         
-        let parameters = ["email": email.text,
-                          "password": password.text]
-        
-        do {
-            postRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .sortedKeys)
-        } catch {
-            print("Error al pasar el JSON")
+        Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/login", method: .post, parameters: parameters, encoding: URLEncoding.httpBody)
+            .responseJSON { response in
+                
+                let token = response.result.value
+                let statusCode = response.response?.statusCode
+                
+                if statusCode == 200 {
+                    self.performSegue(withIdentifier: "login", sender: sender)
+                }
+                
+                if statusCode == 403 {
+                    let alert = UIAlertController(title: "Permission denied", message: "You dont have permission", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                    self.present(alert,animated: true)
+                }
+                
+                if statusCode == 400 {
+                    let alert = UIAlertController(title: "Wrong credentials", message: "Your email or password are incorrect", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                    self.present(alert,animated: true)
+                }
+                
+                UserDefaults.standard.set(token, forKey: "token")
         }
-        
-        postRequest.addValue("appliction/json", forHTTPHeaderField: "Content-type")
-        postRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-        
-        URLSession.shared.dataTask(with: postRequest) { (data, response, error) in
-            if error == nil {
-                print("Estas logueado")
-            } else {
-                print(error ?? "Error")
-            }
-            
-            }.resume()
         
     }
 }

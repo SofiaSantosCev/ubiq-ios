@@ -11,6 +11,7 @@ class PerfilVC: UIViewController {
         super.viewDidLoad()
         
         //Asignar información del token a los label y la imagen.
+        peticionGet()
     }
 
   
@@ -23,4 +24,16 @@ class PerfilVC: UIViewController {
         performSegue(withIdentifier: "LogOut", sender: sender)
     }
     
+    func peticionGet(){
+        let url = URL(string: "http://localhost:8888/ubiq/public/index.php/api/user")
+            
+        URLSession.shared.dataTask(with: url!) {
+        (data, response, error) in
+            if error == nil {
+                // Usar data
+            } else {
+                print(error)
+            }
+        }.resume()
+    }
 }

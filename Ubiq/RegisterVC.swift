@@ -1,5 +1,6 @@
 
 import UIKit
+import Alamofire
 
 class RegisterVC: UIViewController {
 
@@ -10,43 +11,30 @@ class RegisterVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         Registrobtn.layer.cornerRadius = 15
-        
     }
     
     @IBAction func registroBtn(_ sender: Any) {
-        //peticionPost()
-        
+        peticionPost(sender: sender)
     }
     
-    func peticionPost(){
-        let urlRegister = URL(string: "localhost:8888/ubiq/public/index.php/register")
-        var postRequest = URLRequest(url: urlRegister!)
-        postRequest.httpMethod = "POST"
+    func peticionPost(sender: Any?){
+        let parameters = ["name" : name.text!,
+                          "email" : email.text!,
+                          "password" : password.text!]
         
-        let parameters = ["name" : name.text,
-                          "email" : email.text,
-                          "password" : password.text]
-        
-        do {
-            postRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .sortedKeys)
-        } catch {
-            print("Error al pasar el JSON")
+        Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/register", method: .post, parameters: parameters, encoding: URLEncoding.httpBody)
+            .responseJSON { response in
+                print(response.result.value)
+                
+                if response.response?.statusCode == 200 {
+                    self.performSegue(withIdentifier: "register", sender: sender)
+                } else {
+                    let alert = UIAlertController(title: "Permission denied", message: "You dont have permission", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                    self.present(alert,animated: true)
+                }
         }
         
-        postRequest.addValue("appliction/json", forHTTPHeaderField: "Content-type")
-        postRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-        
-        URLSession.shared.dataTask(with: postRequest) { (data, response, error) in
-            if error == nil {
-                print("Usuario creado")
-            } else {
-                print(error ?? "Error")
-            }
-            
-        }.resume()
-        
     }
-    
 }

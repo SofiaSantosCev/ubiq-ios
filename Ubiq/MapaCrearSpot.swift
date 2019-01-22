@@ -17,7 +17,6 @@ class MapaCrearSpot: UIViewController, UIGestureRecognizerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         if pin != nil {
             marcar(localizacion: pin!)
-            print("pin:",pin)
         }
     }
     
@@ -63,8 +62,6 @@ class MapaCrearSpot: UIViewController, UIGestureRecognizerDelegate {
             let origin = sender as! MapaCrearSpot
             
             destination.coordenadas = origin.coordenadas!
-            print("destination.coordenadas",destination.coordenadas)
-            print("origin.coordenadas",origin.coordenadas)
         }
     }
 }

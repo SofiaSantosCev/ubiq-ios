@@ -6,6 +6,8 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     @IBOutlet weak var mapa: MKMapView!
     let manager = CLLocationManager()
+    
+    //sitios hardcodeados
     var sitios = [CLLocationCoordinate2D]()
     
     override func viewDidLoad() {
@@ -43,6 +45,5 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
     }
 }
