@@ -7,7 +7,7 @@ class MapaCrearSpot: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var mapa: MKMapView!
     var coordenadas: CLLocationCoordinate2D?
     var pin: CLLocationCoordinate2D?
-    
+    var pinGuardado: CLLocationCoordinate2D?
     override func viewDidLoad() {
         super.viewDidLoad()
         setMapview()
@@ -15,8 +15,9 @@ class MapaCrearSpot: UIViewController, UIGestureRecognizerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if pin != nil {
-            marcar(localizacion: pin!)
+        pinGuardado = UserDefaults.standard.object(forKey: "pin") as! CLLocationCoordinate2D
+        if pinGuardado != nil {
+            marcar(localizacion: pinGuardado!)
         }
     }
     
@@ -32,12 +33,10 @@ class MapaCrearSpot: UIViewController, UIGestureRecognizerDelegate {
         if gestureReconizer.state != UIGestureRecognizerState.ended {
             let touchLocation = gestureReconizer.location(in: mapa)
             let locationCoordinate = mapa.convert(touchLocation,toCoordinateFrom: mapa)
-            print("Tapped at lat: \(locationCoordinate.latitude) long: \(locationCoordinate.longitude)")
             
             marcar(localizacion: locationCoordinate)
             coordenadas = locationCoordinate
             pin = coordenadas
-            print("pin:", pin)
         }
     }
     
@@ -53,7 +52,7 @@ class MapaCrearSpot: UIViewController, UIGestureRecognizerDelegate {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        
+        UserDefaults.standard.set(pin, forKey: "pin")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

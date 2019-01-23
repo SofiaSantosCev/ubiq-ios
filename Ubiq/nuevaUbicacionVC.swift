@@ -23,7 +23,6 @@ UINavigationControllerDelegate {
         
         descripcion.borderStyle = UITextBorderStyle.roundedRect
         btn.layer.cornerRadius = 15
-        
     }
     
     //Convierte la fecha seleccionada en el datePicker a string y la guarda en una variable externa
@@ -47,9 +46,9 @@ UINavigationControllerDelegate {
     
     //Crea un nuevo sitio y envia al usuario a la vista detalle
     @IBAction func create(_ sender: Any) {
+        peticionPost()
         performSegue(withIdentifier: "create", sender: sender)
         
-        peticionPost()
     }
     
     //Enviar datos a la api
@@ -61,7 +60,7 @@ UINavigationControllerDelegate {
                           "start_date" : fechaInicio.date,
                           "end_date" : fechaFin.date] as [String : Any]
         
-        Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/register", method: .post, parameters: parameters, encoding: URLEncoding.httpBody)
+        Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/location", method: .post, parameters: parameters, encoding: URLEncoding.httpBody)
             .responseJSON { response in
                 print(response.result.value)
         }

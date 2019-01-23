@@ -25,8 +25,9 @@ class LoginVC: UIViewController {
         
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/login", method: .post, parameters: parameters, encoding: URLEncoding.httpBody)
             .responseJSON { response in
+        
+                let token = response.result.value as! [String : Any]
                 
-                let token = response.result.value
                 let statusCode = response.response?.statusCode
                 
                 if statusCode == 200 {
@@ -45,7 +46,8 @@ class LoginVC: UIViewController {
                     self.present(alert,animated: true)
                 }
                 
-                UserDefaults.standard.set(token, forKey: "token")
+                UserDefaults.standard.set(token["token"], forKey: "token")
+                UserDefaults.standard.set(token["user_id"], forKey: "user_id")
         }
         
     }
