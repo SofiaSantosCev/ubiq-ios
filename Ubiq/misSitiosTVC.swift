@@ -27,6 +27,8 @@ class misSitiosTVC: UITableViewController {
                                              latitude: x["y_coordinate"] as! Double,
                                              user_id: x["user_id"] as! Int)
                         sitios.append(location)
+                        print(location)
+                        print("datos cargados")
                     }
                 }
         }

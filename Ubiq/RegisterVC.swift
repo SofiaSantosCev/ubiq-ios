@@ -25,7 +25,6 @@ class RegisterVC: UIViewController {
         
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/register", method: .post, parameters: parameters, encoding: URLEncoding.httpBody)
             .responseJSON { response in
-                print(response.result.value)
                 
                 if response.response?.statusCode == 200 {
                     self.performSegue(withIdentifier: "register", sender: sender)

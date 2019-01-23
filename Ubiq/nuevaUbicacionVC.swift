@@ -5,23 +5,28 @@ import MapKit
 import Alamofire
 
 class nuevaUbicacionVC: UIViewController, UIImagePickerControllerDelegate,
-UINavigationControllerDelegate {
-    @IBOutlet weak var descripcion: UITextField!
+UINavigationControllerDelegate, UIGestureRecognizerDelegate {
+    
+    @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var btn: UIButton!
+    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var titulo: UITextField!
-    @IBOutlet weak var image: UIImageView!
-    @IBOutlet weak var change: UIButton!
     @IBOutlet weak var fechaInicio: UIDatePicker!
     @IBOutlet weak var fechaFin: UIDatePicker!
+    var coordenadas: CLLocationCoordinate2D?
+    var pin: CLLocationCoordinate2D?
+    var pinGuardado: CLLocationCoordinate2D?
     
     var dateInicio: String?
     var dateFin: String?
-    var coordenadas:CLLocationCoordinate2D?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        descripcion.borderStyle = UITextBorderStyle.roundedRect
+        let borderColor : UIColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1.0)
+        textView.layer.borderWidth = 0.5
+        textView.layer.borderColor = borderColor.cgColor
+        textView.layer.cornerRadius = 5.0
         btn.layer.cornerRadius = 15
     }
     
@@ -40,21 +45,15 @@ UINavigationControllerDelegate {
         self.dateFin = strDate
     }
     
-    @IBAction func change(_ sender: Any) {
-        //Dejar escoger de la galeria o de la camara
-    }
-    
     //Crea un nuevo sitio y envia al usuario a la vista detalle
     @IBAction func create(_ sender: Any) {
-        peticionPost()
-        performSegue(withIdentifier: "create", sender: sender)
-        
+        peticionPost(sender: sender)
     }
     
     //Enviar datos a la api
-    func peticionPost(){
+    func peticionPost(sender: Any){
         let parameters = ["name" : titulo.text!,
-                          "description" : descripcion.text!,
+                          "description" : textView.text!,
                           "x_coordinate" : coordenadas?.longitude,
                           "y_coordinate" : coordenadas?.latitude,
                           "start_date" : fechaInicio.date,
@@ -62,7 +61,13 @@ UINavigationControllerDelegate {
         
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/location", method: .post, parameters: parameters, encoding: URLEncoding.httpBody)
             .responseJSON { response in
-                print(response.result.value)
+                if response.response?.statusCode == 200 {
+                    self.performSegue(withIdentifier: "create", sender: sender)
+                } else {
+                    let alert = UIAlertController(title: "Permission denied", message: "You dont have permission", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                    self.present(alert,animated: true)
+                }
         }
     }
     
@@ -72,34 +77,40 @@ UINavigationControllerDelegate {
             let nuevo = sender as! nuevaUbicacionVC
             
             destination.Titulo.text = nuevo.titulo.text
-            destination.Descripcion.text = nuevo.descripcion.text
+            destination.Descripcion.text = nuevo.textView.text
             destination.fechaDesde.text = dateInicio
             destination.fechaHasta.text = dateFin
-            destination.image.image = nuevo.image.image
         }
     }
     
-    @IBAction func openCameraButton(sender: AnyObject) {
-        let imagePicker = UIImagePickerController()
-        
+    func setMapview(){
+        let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(MapaCrearSpot.handleLongPress(gestureReconizer:)))
+        lpgr.minimumPressDuration = 0.5
+        lpgr.delaysTouchesBegan = true
+        lpgr.delegate = self
+        map.addGestureRecognizer(lpgr)
+    }
+    
+    @objc func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
+        if gestureReconizer.state != UIGestureRecognizerState.ended {
+            let touchLocation = gestureReconizer.location(in: map)
+            let locationCoordinate = map.convert(touchLocation,toCoordinateFrom: map)
             
-            if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
-                print("Button capture")
-                
-                imagePicker.delegate = self
-                imagePicker.sourceType = .savedPhotosAlbum;
-                imagePicker.allowsEditing = false
-                
-                self.present(imagePicker, animated: true, completion: nil)
-            }
+            marcar(localizacion: locationCoordinate)
+            coordenadas = locationCoordinate
+            pin = coordenadas
         }
+    }
+    
+    func marcar(localizacion: CLLocationCoordinate2D){
+        let span = MKCoordinateSpanMake(0.02, 0.02)
+        let region = MKCoordinateRegion(center: localizacion, span: span)
+        map.setRegion(region, animated: true)
         
-        func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
-            self.dismiss(animated: true, completion: { () -> Void in
-                
-            })
-            
-            self.image.image = image
-        }
+        //marcador
+        let anotacion = MKPointAnnotation()
+        anotacion.coordinate = localizacion
+        map.addAnnotation(anotacion)
+    }
     
 }

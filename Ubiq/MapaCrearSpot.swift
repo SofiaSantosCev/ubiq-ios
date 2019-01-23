@@ -8,6 +8,7 @@ class MapaCrearSpot: UIViewController, UIGestureRecognizerDelegate {
     var coordenadas: CLLocationCoordinate2D?
     var pin: CLLocationCoordinate2D?
     var pinGuardado: CLLocationCoordinate2D?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setMapview()
@@ -15,8 +16,8 @@ class MapaCrearSpot: UIViewController, UIGestureRecognizerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        pinGuardado = UserDefaults.standard.object(forKey: "pin") as! CLLocationCoordinate2D
-        if pinGuardado != nil {
+        if UserDefaults.standard.object(forKey: "pin") != nil {
+            pinGuardado = UserDefaults.standard.object(forKey: "pin") as! CLLocationCoordinate2D
             marcar(localizacion: pinGuardado!)
         }
     }
