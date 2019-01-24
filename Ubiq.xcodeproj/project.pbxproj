@@ -22,6 +22,7 @@
 		7F9F59AC21E6261A004B88D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F9F59AA21E6261A004B88D2 /* Main.storyboard */; };
 		7F9F59AE21E6261B004B88D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F9F59AD21E6261B004B88D2 /* Assets.xcassets */; };
 		7F9F59B121E6261C004B88D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F9F59AF21E6261C004B88D2 /* LaunchScreen.storyboard */; };
+		7FED206021F9DFF5005ABAD2 /* tabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FED205F21F9DFF5005ABAD2 /* tabBarItem.swift */; };
 		A46B016F30F7A832A5E7E5DD /* Pods_Ubiq.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4FFC9434E9E9374B2E5F76B /* Pods_Ubiq.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		7F9F59AD21E6261B004B88D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7F9F59B021E6261C004B88D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F9F59B221E6261C004B88D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7FED205F21F9DFF5005ABAD2 /* tabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tabBarItem.swift; sourceTree = "<group>"; };
 		B4FFC9434E9E9374B2E5F76B /* Pods_Ubiq.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ubiq.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E426485DB32C8B250862D9D4 /* Pods-Ubiq.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ubiq.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ubiq/Pods-Ubiq.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,6 +104,7 @@
 				7F97C00621E6598C00F4F562 /* DetalleVC.swift */,
 				7F9B31DE21E7A1B40043E59E /* PerfilVC.swift */,
 				7F97C00A21E66DA600F4F562 /* Sitio.swift */,
+				7FED205F21F9DFF5005ABAD2 /* tabBarItem.swift */,
 				7F9F59AA21E6261A004B88D2 /* Main.storyboard */,
 				7F9F59AD21E6261B004B88D2 /* Assets.xcassets */,
 				7F9F59AF21E6261C004B88D2 /* LaunchScreen.storyboard */,
@@ -238,6 +241,7 @@
 				7F97C00121E6584B00F4F562 /* LoginVC.swift in Sources */,
 				7F97C00921E659D400F4F562 /* nuevaUbicacionVC.swift in Sources */,
 				7F9F59A721E6261A004B88D2 /* AppDelegate.swift in Sources */,
+				7FED206021F9DFF5005ABAD2 /* tabBarItem.swift in Sources */,
 				7F23B58D21EF866A00DA4093 /* MapaCrearSpot.swift in Sources */,
 				7F97C00321E6589300F4F562 /* misSitiosTVC.swift in Sources */,
 				7F9B31DF21E7A1B40043E59E /* PerfilVC.swift in Sources */,

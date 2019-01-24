@@ -4,6 +4,7 @@ import Alamofire
 
 var sitios = [Sitio]()
 class misSitiosTVC: UITableViewController {
+    var token = UserDefaults.standard.object(forKey: "token")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -12,7 +13,11 @@ class misSitiosTVC: UITableViewController {
     
     //Obtener sitios guardados peticion get. Meterlos en array sitios
     func listaSitios(){
-        Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/location", method: .get)
+        let headers: HTTPHeaders = [
+            "Authorization":UserDefaults.standard.object(forKey: "token") as! String
+        ]
+        
+        Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/location", method: .get, headers: headers)
             .responseJSON { response in
                 let responseJSON = response.result.value as! [String: Any]
                 if response.response?.statusCode == 200 {
@@ -21,14 +26,12 @@ class misSitiosTVC: UITableViewController {
                         let location = Sitio(id: x["id"] as! Int,
                                              titulo: x["name"] as! String,
                                              descripcion: (x["description"] as? String)!,
-                                             dateDesde: x["start_date"] as! Date,
-                                             dateHasta: x["end_date"] as! Date,
+                                             dateDesde: x["start_date"] as! String,
+                                             dateHasta: x["end_date"] as! String,
                                              longitude: x["x_coordinate"] as! Double,
                                              latitude: x["y_coordinate"] as! Double,
                                              user_id: x["user_id"] as! Int)
                         sitios.append(location)
-                        print(location)
-                        print("datos cargados")
                     }
                 }
         }
@@ -44,16 +47,14 @@ class misSitiosTVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "celda", for: indexPath) as! misSitiosTVCell
-        let dateFormatter = DateFormatter()
-        var dateSince = dateFormatter.string(from: sitios[indexPath.row].dateDesde!)
-        var dateTill = dateFormatter.string(from: sitios[indexPath.row].dateHasta!)
         
         cell.name.text = sitios[indexPath.row].titulo
-        cell.fechaDesde.text = dateSince
-        cell.fechaHasta.text = dateTill
+        cell.fechaDesde.text = sitios[indexPath.row].dateDesde
+        cell.fechaHasta.text = sitios[indexPath.row].dateHasta
         return cell
     }
     
+    //Enviar datos de misSitiosTVCell(celda) a DetalleVC(vista detalle spot)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.destination is DetalleVC {
@@ -61,8 +62,8 @@ class misSitiosTVC: UITableViewController {
             let sitio = sender as! misSitiosTVCell
             
             destination.Titulo.text = sitio.name.text!
-            destination.fechaDesde = sitio.fechaDesde
-            destination.fechaHasta = sitio.fechaHasta
+            destination.fechaDesde.text = sitio.fechaDesde.text
+            destination.fechaHasta.text = sitio.fechaHasta.text
         }
     }
 }

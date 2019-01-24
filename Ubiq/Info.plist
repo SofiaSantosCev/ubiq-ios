@@ -56,7 +56,5 @@
 	<string>¿Permites que est aaplicacion use tu localizacion?</string>
 	<key>NSCameraUsageDescription</key>
 	<string>To take Photo</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>To show photo</string>
 </dict>
 </plist>

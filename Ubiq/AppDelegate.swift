@@ -35,6 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    func applicationDidFinishLaunching(_ application: UIApplication) {
+        var navigationBarAppearace = UINavigationBar.appearance()
+        navigationBarAppearace.titleTextAttributes = [kCTForegroundColorAttributeName:UIColor .white ] as! [NSAttributedStringKey : Any]
+    }
+    
 }
 
