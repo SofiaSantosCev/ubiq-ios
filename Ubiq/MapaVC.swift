@@ -49,10 +49,8 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
                                              longitude: x["x_coordinate"] as! Double,
                                              latitude: x["y_coordinate"] as! Double)
                         self.sitios.append(location)
-                        print(self.sitios.count)
                         for sitio in self.sitios {
-                            self.marcar(longitude: sitio.longitude!, latitude: sitio.latitude!)
-                            print("sitios marcados")
+                            self.marcar(longitude: sitio.longitude!, latitude: sitio.latitude!, titulo: sitio.titulo!, description: sitio.descripcion!)
                         }
                     }
                 }
@@ -61,8 +59,8 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     //Marcar la ubicacion en el mapa
-    func marcar(longitude: Double, latitude: Double){
-        let span = MKCoordinateSpanMake(0.5, 0.5)
+    func marcar(longitude: Double, latitude: Double, titulo: String, description: String){
+        let span = MKCoordinateSpanMake(2, 2)
         let localizacion = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let region = MKCoordinateRegion(center: localizacion, span: span)
         mapa.setRegion(region, animated: true)
@@ -71,6 +69,8 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         let anotacion = MKPointAnnotation()
         anotacion.coordinate.latitude = latitude
         anotacion.coordinate.longitude = longitude
+        anotacion.title = titulo
+        anotacion.subtitle = description
         mapa.addAnnotation(anotacion)
     }
     

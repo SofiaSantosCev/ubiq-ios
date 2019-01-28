@@ -54,12 +54,12 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
             "Authorization":UserDefaults.standard.object(forKey: "token")! as! String
         ]
         
-        let parameters = ["name" : titulo.text,
-                          "description" : textView.text,
+        let parameters: Parameters = ["name" : titulo.text!,
+                          "description" : textView.text!,
                           "x_coordinate" : longitude,
                           "y_coordinate" : latitude,
-                          "start_date" : dateInicio,
-                          "end_date" : dateFin] as [String : Any]
+                          "start_date" : dateInicio!,
+                          "end_date" : dateFin!]
         
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/location", method: .post, parameters: parameters, encoding: URLEncoding.httpBody, headers:headers)
             .responseJSON { response in
@@ -67,9 +67,8 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
                 if response.response?.statusCode == 200 {
                     self.performSegue(withIdentifier: "create", sender: self)
                 } else {
-                    print(response.response?.statusCode)
-                    let alert = UIAlertController(title: "Que coño", message: "Mierda error", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Joder", style: .cancel, handler: nil))
+                    let alert = UIAlertController(title: "Error", message: "don't know why", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
                     self.present(alert,animated: true)
                 }
         }

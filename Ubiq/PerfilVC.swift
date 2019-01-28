@@ -7,6 +7,7 @@ class PerfilVC: UIViewController {
 
     @IBOutlet weak var Name: UILabel!
     @IBOutlet weak var Email: UILabel!
+    @IBOutlet weak var profileImage: UIImageView!
     
     var user_id = UserDefaults.standard.string(forKey: "user_id")
     var token = UserDefaults.standard.string(forKey: "token") as! String
@@ -14,6 +15,13 @@ class PerfilVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         peticionGet()
+        
+        profileImage.layer.borderWidth = 1
+        profileImage.layer.masksToBounds = false
+        profileImage.layer.borderColor = UIColor.black.cgColor
+        profileImage.layer.cornerRadius = profileImage.frame.height/2
+        profileImage.clipsToBounds = true
+      
     }
     
     //Peticion GET para recibir los usuarios registrados
