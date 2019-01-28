@@ -29,7 +29,6 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         listaSitios()
         for sitio in sitios {
             marcar(longitude: sitio.longitude!, latitude: sitio.latitude!)
-            print("sitio marcado")
         }
         
     }
@@ -44,8 +43,7 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
                 if response.response?.statusCode == 200 {
                     let data = responseJSON["locations"] as! [[String:Any]]
                     for x in data {
-                        let location = Sitio(id: x["id"] as! Int,
-                                             titulo: x["name"] as! String,
+                        let location = Sitio(titulo: x["name"] as! String,
                                              descripcion: (x["description"] as? String)!,
                                              dateDesde: x["start_date"] as! String,
                                              dateHasta: x["end_date"] as! String,

@@ -2,10 +2,11 @@
 import UIKit
 import Alamofire
 
-var sitios = [Sitio]()
+
 class misSitiosTVC: UITableViewController {
     var token = UserDefaults.standard.object(forKey: "token")
-    
+    var sitios = [Sitio]()
+    //Se cargan los datos en las celdas
     override func viewDidLoad() {
         super.viewDidLoad()
         listaSitios()
@@ -23,15 +24,16 @@ class misSitiosTVC: UITableViewController {
                 if response.response?.statusCode == 200 {
                     let data = responseJSON["locations"] as! [[String:Any]]
                     for x in data {
-                        let location = Sitio(id: x["id"] as! Int,
-                                             titulo: x["name"] as! String,
+                        let location = Sitio(titulo: x["name"] as! String,
                                              descripcion: (x["description"] as? String)!,
                                              dateDesde: x["start_date"] as! String,
                                              dateHasta: x["end_date"] as! String,
                                              longitude: x["x_coordinate"] as! Double,
                                              latitude: x["y_coordinate"] as! Double,
-                                             user_id: x["user_id"] as! Int)
-                        sitios.append(location)
+                                             user_id: x["user_id"] as! Int) 
+                        self.sitios.append(location)
+                        print(location)
+                        self.tableView.reloadData()
                     }
                 }
         }
@@ -51,7 +53,9 @@ class misSitiosTVC: UITableViewController {
         cell.name.text = sitios[indexPath.row].titulo
         cell.fechaDesde.text = sitios[indexPath.row].dateDesde
         cell.fechaHasta.text = sitios[indexPath.row].dateHasta
+        cell.id = indexPath.row
         return cell
+        print(cell.name.text, cell.fechaDesde.text, cell.fechaDesde.text)
     }
     
     //Enviar datos de misSitiosTVCell(celda) a DetalleVC(vista detalle spot)
@@ -59,11 +63,11 @@ class misSitiosTVC: UITableViewController {
         
         if segue.destination is DetalleVC {
             let destination = segue.destination as! DetalleVC
-            let sitio = sender as! misSitiosTVCell
+            let sender = sender as! misSitiosTVCell
             
-            destination.Titulo.text = sitio.name.text!
-            destination.fechaDesde.text = sitio.fechaDesde.text
-            destination.fechaHasta.text = sitio.fechaHasta.text
+            destination.sitio = sitios[sender.id!]
+            
+            
         }
     }
 }

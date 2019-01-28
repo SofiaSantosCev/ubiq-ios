@@ -20,8 +20,10 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     var latitude:Double = 0.0
     var dateInicio: String?
     var dateFin: String?
+    var sitio: Sitio?
     
     
+    //Configura la vista del boton
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,21 +34,21 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
         btn.layer.cornerRadius = 15
         setMapview()
         
+        
     }
     
     //Convierte la fecha seleccionada en el datePicker a string y la guarda en una variable externa
     @IBAction func fechaInicio(_ sender: Any) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
-        let strDate = dateFormatter.string(from: fechaInicio.date)
-        self.dateInicio = strDate
+        self.dateInicio = dateFormatter.string(from: fechaInicio.date)
     }
-
+    
+    //Convierte la fecha seleccionada en el datePicker a string y la guarda en una variable externa
     @IBAction func fechaFin(_ sender: Any) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
-        let strDate = dateFormatter.string(from: fechaFin.date)
-        self.dateFin = strDate
+        self.dateFin = dateFormatter.string(from: fechaFin.date)
     }
     
     //Crea un nuevo sitio y envia al usuario a la vista detalle
@@ -54,6 +56,8 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
         peticionPost(sender: sender)
         performSegue(withIdentifier: "create", sender: sender)
     }
+    
+    
     
     //Enviar datos a la api
     func peticionPost(sender: Any){
@@ -83,6 +87,7 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
         }
     }
     
+    //Configura y el longpressgesture recognizer en el map
     func setMapview(){
         let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(MapaCrearSpot.handleLongPress(gestureReconizer:)))
         lpgr.minimumPressDuration = 0.5
@@ -97,15 +102,17 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
             let locationCoordinate = map.convert(touchLocation,toCoordinateFrom: map)
             longitude = locationCoordinate.longitude
             latitude = locationCoordinate.latitude
-            marcar(longitude: longitude, latitude: latitude)
             longitudeField.text = String(longitude)
             latitudeField.text = String(latitude)
+            
+            marcar(longitude: longitude, latitude: latitude)
+            
         }
     }
     
     func marcar(longitude: Double, latitude: Double){
         let span = MKCoordinateSpanMake(0.02, 0.02)
-        let localizacion = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let localizacion = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
         
         print("longitude = ", localizacion.longitude, "latitude = ", localizacion.latitude)
         let region = MKCoordinateRegion(center: localizacion, span: span)
@@ -118,18 +125,15 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
         map.addAnnotation(anotacion)
     }
     
-    //Enviar datos a la pantalla detalle
+    //Enviar datos a la pantalla detalleVC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is DetalleVC {
-            let destination = segue.destination as! DetalleVC
-            let new = sender as! nuevaUbicacionVC
+            var destination = segue.destination as! DetalleVC
+            print(self.titulo.text!, self.textView.text, self.dateInicio, self.dateFin, self.longitude, self.latitude,UserDefaults.standard.object(forKey: "user_id") as! Int)
+            let sitio = Sitio(titulo: self.titulo.text!, descripcion: self.textView.text, dateDesde: self.dateInicio!, dateHasta: self.dateFin!, longitude: self.longitude, latitude: self.latitude, user_id: UserDefaults.standard.object(forKey: "user_id") as! Int)
+           
+            destination.sitio = sitio
             
-            destination.Titulo.text = new.titulo.text
-            destination.Descripcion.text = new.textView.text
-            destination.fechaDesde.text = new.dateInicio
-            destination.fechaHasta.text = new.dateFin
-            destination.latitude = new.latitude
-            destination.longitude = new.longitude
         }
     }
     
