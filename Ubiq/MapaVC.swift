@@ -21,12 +21,10 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             manager.startUpdatingLocation()
         }
         listaSitios()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         listaSitios()
-        
     }
     
     //Peticion get para obtener toda la lista de sitios

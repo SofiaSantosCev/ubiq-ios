@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F05186B21FF7C2E00063187 /* RecoveryPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F05186A21FF7C2E00063187 /* RecoveryPasswordVC.swift */; };
 		7F97BFFF21E6582900F4F562 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97BFFE21E6582900F4F562 /* RegisterVC.swift */; };
 		7F97C00121E6584B00F4F562 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97C00021E6584B00F4F562 /* LoginVC.swift */; };
 		7F97C00321E6589300F4F562 /* misSitiosTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97C00221E6589300F4F562 /* misSitiosTVC.swift */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		1EDAF1861881FEAF6E9BA6F6 /* Pods-Ubiq.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ubiq.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ubiq/Pods-Ubiq.debug.xcconfig"; sourceTree = "<group>"; };
+		7F05186A21FF7C2E00063187 /* RecoveryPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryPasswordVC.swift; sourceTree = "<group>"; };
 		7F97BFFE21E6582900F4F562 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		7F97C00021E6584B00F4F562 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		7F97C00221E6589300F4F562 /* misSitiosTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = misSitiosTVC.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				7F9B31DE21E7A1B40043E59E /* PerfilVC.swift */,
 				7F97C00A21E66DA600F4F562 /* Sitio.swift */,
 				7FED205F21F9DFF5005ABAD2 /* tabBarItem.swift */,
+				7F05186A21FF7C2E00063187 /* RecoveryPasswordVC.swift */,
 				7F9F59AA21E6261A004B88D2 /* Main.storyboard */,
 				7F9F59AD21E6261B004B88D2 /* Assets.xcassets */,
 				7F9F59AF21E6261C004B88D2 /* LaunchScreen.storyboard */,
@@ -237,6 +240,7 @@
 				7FED206021F9DFF5005ABAD2 /* tabBarItem.swift in Sources */,
 				7F97C00321E6589300F4F562 /* misSitiosTVC.swift in Sources */,
 				7F9B31DF21E7A1B40043E59E /* PerfilVC.swift in Sources */,
+				7F05186B21FF7C2E00063187 /* RecoveryPasswordVC.swift in Sources */,
 				7F97C00721E6598C00F4F562 /* DetalleVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
