@@ -18,6 +18,12 @@ class LoginVC: UIViewController {
     @IBAction func loginBtn(_ sender: Any) {
         peticionPost(sender: sender)
     }
+    
+    func showAlert(title: String, message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+        self.present(alert,animated: true)
+    }
 
     func peticionPost(sender: Any){
         let parameters = ["email" : email.text!,
@@ -25,8 +31,7 @@ class LoginVC: UIViewController {
         
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/login", method: .post, parameters: parameters, encoding: URLEncoding.httpBody)
             .responseJSON { response in
-                let token = response.result.value as! [String : Any]
-                
+                let token = response.result.value! as! [String : Any]
                 let statusCode = response.response?.statusCode
                 
                 if statusCode == 200 {
@@ -34,15 +39,11 @@ class LoginVC: UIViewController {
                 }
                 
                 if statusCode == 403 {
-                    let alert = UIAlertController(title: "Permission denied", message: "You dont have permission", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                    self.present(alert,animated: true)
+                    self.showAlert(title: "Permission denied", message: "You don't have permission")
                 }
                 
                 if statusCode == 400 {
-                    let alert = UIAlertController(title: "Wrong credentials", message: "Your email or password are incorrect", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                    self.present(alert,animated: true)
+                    self.showAlert(title: "Wrong credentials", message: "Your email or password are incorrect")
                 }
                 
                 UserDefaults.standard.set(token["token"], forKey: "token")

@@ -26,9 +26,8 @@ class DetalleVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate 
             manager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             manager.startUpdatingLocation()
         }
-        let finalLongitude = sitio?.longitude
-        var finalLatitude = sitio?.latitude
-        marcar(longitude: finalLongitude!, latitude: finalLatitude!)
+       
+        marcar(longitude: (sitio?.longitude)!, latitude: (sitio?.latitude)!)
         
         Titulo.text = sitio?.titulo
         Descripcion.text = sitio?.descripcion
@@ -37,10 +36,9 @@ class DetalleVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate 
     }
     
     func marcar(longitude: Double, latitude: Double){
-        let span = MKCoordinateSpanMake(0.02, 0.02)
-        let localizacion = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let region = MKCoordinateRegion(center: localizacion, span: span)
-        map.setRegion(region, animated: true)
+        map.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude),
+                                         span: MKCoordinateSpanMake(0.02, 0.02)),
+                                        animated: true)
         
         //marcador
         let anotacion = MKPointAnnotation()

@@ -9,16 +9,17 @@ class PerfilVC: UIViewController {
     @IBOutlet weak var Email: UILabel!
     
     var user_id = UserDefaults.standard.string(forKey: "user_id")
+    var token = UserDefaults.standard.string(forKey: "token") as! String
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getInfo()
+        peticionGet()
     }
     
     //Peticion GET para recibir los usuarios registrados
-    func getInfo(){
+    func peticionGet(){
         let headers: HTTPHeaders = [
-            "Authorization":UserDefaults.standard.object(forKey: "token") as! String
+            "Authorization":token
         ]
         
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/user", method: .get, headers: headers)
@@ -34,25 +35,33 @@ class PerfilVC: UIViewController {
     }
 
     //Boton eliminar usuario. Se elimina el usuario y se manda a la pantalla de registro
-    @IBAction func BorrarBtn(_ sender: Any) {
-        Alamofire.request("http://ubiq/public/index.php/api/user/"+user_id!, method: .delete).responseJSON {
-            response in
-            
-            if response.response?.statusCode == 200 {
-                //performSegue(withIdentifier: "deleteAccount", sender: self.sender)
-            } else {
-                print("error")
-            }
-        }
+    @IBAction func BorrarBtn( sender: Any) {
+        peticionDelete(sender: sender)
     }
 
     //Se cierra sesión y se abre la pantalla login
     @IBAction func LogOut(_ sender: Any) {
         UserDefaults.standard.removeObject(forKey: "token")
-        performSegue(withIdentifier: "logOut", sender: sender)
+        let newViewController = storyboard?.instantiateViewController(withIdentifier: "login") as! LoginVC
+        self.present(newViewController, animated: true, completion: nil)
     }
     
-    
-    
-    
+    func peticionDelete(sender: Any){
+        let headers: HTTPHeaders = [
+            "Authorization":token
+        ]
+        
+        Alamofire.request("http://ubiq/public/index.php/api/user/"+user_id!, method: .delete, headers: headers).responseJSON {
+            response in
+            
+            if response.response?.statusCode == 200 {
+                let newViewController = self.storyboard?.instantiateViewController(withIdentifier: "register") as! RegisterVC
+                self.present(newViewController, animated: true, completion: nil)
+            } else {
+                let alert = UIAlertController(title: "Error", message: "An error ocurred", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Try again later", style: .cancel, handler: nil))
+                self.present(alert,animated: true)
+            }
+        }
+    }
 }

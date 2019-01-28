@@ -20,19 +20,18 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             manager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             manager.startUpdatingLocation()
         }
-        
         listaSitios()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         listaSitios()
-        for sitio in sitios {
-            marcar(longitude: sitio.longitude!, latitude: sitio.latitude!)
-        }
         
     }
+    
+    //Peticion get para obtener toda la lista de sitios
     func listaSitios(){
+        sitios = [Sitio]()
         let headers: HTTPHeaders = [
             "Authorization":UserDefaults.standard.object(forKey: "token") as! String
         ]
@@ -48,16 +47,22 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
                                              dateDesde: x["start_date"] as! String,
                                              dateHasta: x["end_date"] as! String,
                                              longitude: x["x_coordinate"] as! Double,
-                                             latitude: x["y_coordinate"] as! Double,
-                                             user_id: x["user_id"] as! Int)
+                                             latitude: x["y_coordinate"] as! Double)
                         self.sitios.append(location)
+                        print(self.sitios.count)
+                        for sitio in self.sitios {
+                            self.marcar(longitude: sitio.longitude!, latitude: sitio.latitude!)
+                            print("sitios marcados")
+                        }
                     }
                 }
-        }
+            }
+        
     }
     
+    //Marcar la ubicacion en el mapa
     func marcar(longitude: Double, latitude: Double){
-        let span = MKCoordinateSpanMake(0.02, 0.02)
+        let span = MKCoordinateSpanMake(0.5, 0.5)
         let localizacion = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let region = MKCoordinateRegion(center: localizacion, span: span)
         mapa.setRegion(region, animated: true)
@@ -68,9 +73,8 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         anotacion.coordinate.longitude = longitude
         mapa.addAnnotation(anotacion)
     }
-
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        guard let _: CLLocationCoordinate2D = manager.location?.coordinate else { return }
     }
 }

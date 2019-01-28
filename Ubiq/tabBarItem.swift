@@ -19,7 +19,7 @@ class tabBarItem: UITabBarItem {
         if let image = image {
             self.image = image.withRenderingMode(.alwaysOriginal)
         }
-        if let image = selectedImage{
+        if let image = selectedImage {
             selectedImage = image.withRenderingMode(.alwaysOriginal)
         }
     }

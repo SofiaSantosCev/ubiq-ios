@@ -21,8 +21,7 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     var dateInicio: String?
     var dateFin: String?
     var sitio: Sitio?
-    
-    
+        
     //Configura la vista del boton
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,55 +32,44 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
         textView.layer.cornerRadius = 5.0
         btn.layer.cornerRadius = 15
         setMapview()
-        
-        
     }
     
     //Convierte la fecha seleccionada en el datePicker a string y la guarda en una variable externa
-    @IBAction func fechaInicio(_ sender: Any) {
+    func DatetoString(){
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         self.dateInicio = dateFormatter.string(from: fechaInicio.date)
-    }
-    
-    //Convierte la fecha seleccionada en el datePicker a string y la guarda en una variable externa
-    @IBAction func fechaFin(_ sender: Any) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
         self.dateFin = dateFormatter.string(from: fechaFin.date)
     }
     
     //Crea un nuevo sitio y envia al usuario a la vista detalle
     @IBAction func create(_ sender: Any) {
-        peticionPost(sender: sender)
-        performSegue(withIdentifier: "create", sender: sender)
+        DatetoString()
+        peticionPost()
     }
     
-    
-    
-    //Enviar datos a la api
-    func peticionPost(sender: Any){
+    //Crear nueva localizacion
+    func peticionPost(){
         let headers: HTTPHeaders = [
-            "Authorization":UserDefaults.standard.object(forKey: "token") as! String
+            "Authorization":UserDefaults.standard.object(forKey: "token")! as! String
         ]
         
-        let parameters = ["name" : titulo.text!,
-                          "description" : textView.text!,
+        let parameters = ["name" : titulo.text,
+                          "description" : textView.text,
                           "x_coordinate" : longitude,
                           "y_coordinate" : latitude,
-                          "start_date" : fechaInicio.date,
-                          "end_date" : fechaFin.date] as [String : Any]
+                          "start_date" : dateInicio,
+                          "end_date" : dateFin] as [String : Any]
         
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/location", method: .post, parameters: parameters, encoding: URLEncoding.httpBody, headers:headers)
             .responseJSON { response in
-                print("status code= ",response.response?.statusCode)
-                print(response.result.value)
                 
                 if response.response?.statusCode == 200 {
-                    self.performSegue(withIdentifier: "create", sender: sender)
+                    self.performSegue(withIdentifier: "create", sender: self)
                 } else {
-                    let alert = UIAlertController(title: "Permission denied", message: "You dont have permission", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                    print(response.response?.statusCode)
+                    let alert = UIAlertController(title: "Que coño", message: "Mierda error", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Joder", style: .cancel, handler: nil))
                     self.present(alert,animated: true)
                 }
         }
@@ -89,7 +77,7 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     
     //Configura y el longpressgesture recognizer en el map
     func setMapview(){
-        let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(MapaCrearSpot.handleLongPress(gestureReconizer:)))
+        let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(gestureReconizer:)))
         lpgr.minimumPressDuration = 0.5
         lpgr.delaysTouchesBegan = true
         lpgr.delegate = self
@@ -114,7 +102,7 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
         let span = MKCoordinateSpanMake(0.02, 0.02)
         let localizacion = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
         
-        print("longitude = ", localizacion.longitude, "latitude = ", localizacion.latitude)
+       
         let region = MKCoordinateRegion(center: localizacion, span: span)
         map.setRegion(region, animated: true)
         
@@ -128,9 +116,8 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     //Enviar datos a la pantalla detalleVC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is DetalleVC {
-            var destination = segue.destination as! DetalleVC
-            print(self.titulo.text!, self.textView.text, self.dateInicio, self.dateFin, self.longitude, self.latitude,UserDefaults.standard.object(forKey: "user_id") as! Int)
-            let sitio = Sitio(titulo: self.titulo.text!, descripcion: self.textView.text, dateDesde: self.dateInicio!, dateHasta: self.dateFin!, longitude: self.longitude, latitude: self.latitude, user_id: UserDefaults.standard.object(forKey: "user_id") as! Int)
+            let destination = segue.destination as! DetalleVC
+            let sitio = Sitio(titulo: self.titulo.text!, descripcion: self.textView.text, dateDesde: self.dateInicio!, dateHasta: self.dateFin!, longitude: self.longitude, latitude: self.latitude)
            
             destination.sitio = sitio
             

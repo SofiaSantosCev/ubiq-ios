@@ -6,14 +6,20 @@ import Alamofire
 class misSitiosTVC: UITableViewController {
     var token = UserDefaults.standard.object(forKey: "token")
     var sitios = [Sitio]()
+    
     //Se cargan los datos en las celdas
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         listaSitios()
     }
     
     //Obtener sitios guardados peticion get. Meterlos en array sitios
     func listaSitios(){
+        sitios = [Sitio]()
         let headers: HTTPHeaders = [
             "Authorization":UserDefaults.standard.object(forKey: "token") as! String
         ]
@@ -29,10 +35,8 @@ class misSitiosTVC: UITableViewController {
                                              dateDesde: x["start_date"] as! String,
                                              dateHasta: x["end_date"] as! String,
                                              longitude: x["x_coordinate"] as! Double,
-                                             latitude: x["y_coordinate"] as! Double,
-                                             user_id: x["user_id"] as! Int) 
+                                             latitude: x["y_coordinate"] as! Double) 
                         self.sitios.append(location)
-                        print(location)
                         self.tableView.reloadData()
                     }
                 }
@@ -47,6 +51,10 @@ class misSitiosTVC: UITableViewController {
         return sitios.count
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100.0
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "celda", for: indexPath) as! misSitiosTVCell
         
@@ -55,7 +63,6 @@ class misSitiosTVC: UITableViewController {
         cell.fechaHasta.text = sitios[indexPath.row].dateHasta
         cell.id = indexPath.row
         return cell
-        print(cell.name.text, cell.fechaDesde.text, cell.fechaDesde.text)
     }
     
     //Enviar datos de misSitiosTVCell(celda) a DetalleVC(vista detalle spot)
@@ -66,8 +73,6 @@ class misSitiosTVC: UITableViewController {
             let sender = sender as! misSitiosTVCell
             
             destination.sitio = sitios[sender.id!]
-            
-            
         }
     }
 }
