@@ -920,7 +920,7 @@
         <!--Recovery PasswordVC-->
         <scene sceneID="sCD-dG-gCX">
             <objects>
-                <viewController storyboardIdentifier="register" id="97U-Ue-A5B" customClass="RecoveryPasswordVC" customModule="Ubiq" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="recovery" id="97U-Ue-A5B" customClass="RecoveryPasswordVC" customModule="Ubiq" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jaJ-tB-eWb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1031,7 +1031,7 @@
         <image name="spots grey" width="16" height="21"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="7Ex-BQ-4EO"/>
+        <segue reference="vQ6-wh-LiR"/>
         <segue reference="7mt-hx-G8e"/>
         <segue reference="6yM-vd-OqV"/>
     </inferredMetricsTieBreakers>
