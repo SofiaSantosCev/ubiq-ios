@@ -21,6 +21,7 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     var dateInicio: String?
     var dateFin: String?
     var sitio: Sitio?
+    var id: Int?
         
     //Configura la vista del boton
     override func viewDidLoad() {
@@ -32,6 +33,8 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
         textView.layer.cornerRadius = 5.0
         btn.layer.cornerRadius = 15
         setMapview()
+        
+        
     }
     
     //Convierte la fecha seleccionada en el datePicker a string y la guarda en una variable externa
@@ -63,9 +66,14 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
         
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/location", method: .post, parameters: parameters, encoding: URLEncoding.httpBody, headers:headers)
             .responseJSON { response in
-                
+                let responseJson = response.result.value! as! [String : Any]
+                self.id = responseJson["data"] as! Int
                 if response.response?.statusCode == 200 {
                     self.performSegue(withIdentifier: "create", sender: self)
+                    if let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "Lista") as? ViewController {
+                        let navController = UINavigationController(rootViewController: secondViewController)
+                        navController.setViewControllers([secondViewController], animated:true)
+                        secondViewController.setFrontViewController(navController, animated: true)
                 } else {
                     let alert = UIAlertController(title: "Error", message: "don't know why", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
@@ -116,7 +124,8 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is DetalleVC {
             let destination = segue.destination as! DetalleVC
-            let sitio = Sitio(titulo: self.titulo.text!, descripcion: self.textView.text, dateDesde: self.dateInicio!, dateHasta: self.dateFin!, longitude: self.longitude, latitude: self.latitude)
+            
+            let sitio = Sitio(id: id!, titulo: self.titulo.text!, descripcion: self.textView.text, dateDesde: self.dateInicio!, dateHasta: self.dateFin!, longitude: self.longitude, latitude: self.latitude)
            
             destination.sitio = sitio
             

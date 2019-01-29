@@ -31,7 +31,7 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     func listaSitios(){
         sitios = [Sitio]()
         let headers: HTTPHeaders = [
-            "Authorization":UserDefaults.standard.object(forKey: "token") as! String
+            "Authorization": UserDefaults.standard.object(forKey: "token") as! String
         ]
         
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/location", method: .get, headers: headers)
@@ -40,7 +40,8 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
                 if response.response?.statusCode == 200 {
                     let data = responseJSON["locations"] as! [[String:Any]]
                     for x in data {
-                        let location = Sitio(titulo: x["name"] as! String,
+                        let location = Sitio(id: x["id"] as! Int,
+                                             titulo: x["name"] as! String,
                                              descripcion: (x["description"] as? String)!,
                                              dateDesde: x["start_date"] as! String,
                                              dateHasta: x["end_date"] as! String,
@@ -70,7 +71,25 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         anotacion.title = titulo
         anotacion.subtitle = description
         mapa.addAnnotation(anotacion)
+        
+        
     }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPinAnnotationView else { return nil}
+        
+        let identifier = "Annotation"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+        
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView!.canShowCallout = true
+        } else {
+            annotationView!.annotation = annotation
+        }
+        return annotationView
+    }
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let _: CLLocationCoordinate2D = manager.location?.coordinate else { return }

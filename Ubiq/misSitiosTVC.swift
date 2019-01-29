@@ -6,11 +6,16 @@ import Alamofire
 class misSitiosTVC: UITableViewController {
     var token = UserDefaults.standard.object(forKey: "token")
     var sitios = [Sitio]()
+    var label: UILabel?
     
     //Se cargan los datos en las celdas
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+        label?.center = CGPoint(x: 180, y: 285)
+        label?.textAlignment = .center
+        label?.text = "No locations saved yet"
+        self.view.addSubview((label)!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -21,7 +26,7 @@ class misSitiosTVC: UITableViewController {
     func listaSitios(){
         sitios = [Sitio]()
         let headers: HTTPHeaders = [
-            "Authorization":UserDefaults.standard.object(forKey: "token") as! String
+            "Authorization": UserDefaults.standard.object(forKey: "token") as! String
         ]
         
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/location", method: .get, headers: headers)
@@ -30,7 +35,8 @@ class misSitiosTVC: UITableViewController {
                 if response.response?.statusCode == 200 {
                     let data = responseJSON["locations"] as! [[String:Any]]
                     for x in data {
-                        let location = Sitio(titulo: x["name"] as! String,
+                        let location = Sitio(id: x["id"] as! Int,
+                                             titulo: x["name"] as! String,
                                              descripcion: (x["description"] as? String)!,
                                              dateDesde: x["start_date"] as! String,
                                              dateHasta: x["end_date"] as! String,
@@ -38,6 +44,10 @@ class misSitiosTVC: UITableViewController {
                                              latitude: x["y_coordinate"] as! Double) 
                         self.sitios.append(location)
                         self.tableView.reloadData()
+                    }
+                    
+                    if !self.sitios.isEmpty {
+                        self.label?.isHidden = true
                     }
                 }
         }

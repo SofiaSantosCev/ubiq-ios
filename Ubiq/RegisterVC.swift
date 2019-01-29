@@ -18,6 +18,12 @@ class RegisterVC: UIViewController {
         peticionPost(sender: sender)
     }
     
+    func showAlert(title: String, message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+        self.present(alert,animated: true)
+    }
+
     func peticionPost(sender: Any?){
         let parameters = ["name" : name.text!,
                           "email" : email.text!,
@@ -25,13 +31,23 @@ class RegisterVC: UIViewController {
         
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/register", method: .post, parameters: parameters, encoding: URLEncoding.httpBody)
             .responseJSON { response in
+                let statusCode = response.response?.statusCode
+                print(statusCode)
                 
-                if response.response?.statusCode == 200 {
+                if statusCode == 200 {
                     self.performSegue(withIdentifier: "register", sender: sender)
-                } else {
-                    let alert = UIAlertController(title: "Permission denied", message: "You dont have permission", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                    self.present(alert,animated: true)
+                }
+                
+                if statusCode == 403 {
+                    self.showAlert(title: "Permission denied", message: "You don't have permission")
+                }
+                
+                if statusCode == 400 {
+                    self.showAlert(title: "Wrong credentials", message: "This email is already on use.")
+                }
+                
+                if statusCode == 500 {
+                    self.showAlert(title: "Error", message: "There's a problem on server")
                 }
         }
         

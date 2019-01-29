@@ -1,6 +1,7 @@
 
 import UIKit
 import MapKit
+import Alamofire
 
 class DetalleVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
@@ -32,7 +33,7 @@ class DetalleVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate 
         Titulo.text = sitio?.titulo
         Descripcion.text = sitio?.descripcion
         fechaDesde.text = sitio?.dateDesde
-        fechaHasta.text = sitio?.dateHasta
+        
     }
     
     func marcar(longitude: Double, latitude: Double){
@@ -47,6 +48,20 @@ class DetalleVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate 
         map.addAnnotation(anotacion)
     }
 
-   
+    @IBAction func deleteSpot(_ sender: Any) {
+        var id = "\(sitio?.id)"
+        let headers: HTTPHeaders = [
+            "Authorization":UserDefaults.standard.object(forKey: "token") as! String
+        ]
+        
+        Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/location/"+id, method: .delete,headers: headers).responseJSON { response in
+            if response.response?.statusCode == 200 {
+                print("Spot deleted")
+            }
+            
+        }
+        
+    }
+    
 
 }

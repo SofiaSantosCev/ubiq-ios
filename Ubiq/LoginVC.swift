@@ -17,6 +17,7 @@ class LoginVC: UIViewController {
     
     @IBAction func loginBtn(_ sender: Any) {
         peticionPost(sender: sender)
+        
     }
     
     func showAlert(title: String, message: String){
@@ -48,6 +49,7 @@ class LoginVC: UIViewController {
                 
                 UserDefaults.standard.set(token["token"], forKey: "token")
                 UserDefaults.standard.set(token["user_id"], forKey: "user_id")
+                
         }
         
     }

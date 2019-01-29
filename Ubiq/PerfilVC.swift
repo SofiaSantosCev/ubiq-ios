@@ -27,7 +27,7 @@ class PerfilVC: UIViewController {
     //Peticion GET para recibir los usuarios registrados
     func peticionGet(){
         let headers: HTTPHeaders = [
-            "Authorization":token
+            "Authorization": token
         ]
         
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/user", method: .get, headers: headers)
@@ -56,7 +56,7 @@ class PerfilVC: UIViewController {
     
     func peticionDelete(sender: Any){
         let headers: HTTPHeaders = [
-            "Authorization":token
+            "Authorization": token
         ]
         
         Alamofire.request("http://ubiq/public/index.php/api/user/"+user_id!, method: .delete, headers: headers).responseJSON {
