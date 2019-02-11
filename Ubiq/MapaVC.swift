@@ -5,10 +5,10 @@ import Alamofire
 
 class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapa: MKMapView!
     let manager = CLLocationManager()
     var sitios = [Sitio]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         manager.delegate = self
@@ -20,7 +20,10 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             manager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             manager.startUpdatingLocation()
         }
+        mapa.delegate = self
         listaSitios()
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,30 +32,34 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     //Peticion get para obtener toda la lista de sitios
     func listaSitios(){
+        var token = UserDefaults.standard.object(forKey: "token")
         sitios = [Sitio]()
         let headers: HTTPHeaders = [
-            "Authorization": UserDefaults.standard.object(forKey: "token") as! String
+            "Authorization": token as! String
         ]
-        
+      
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/location", method: .get, headers: headers)
             .responseJSON { response in
-                let responseJSON = response.result.value as! [String: Any]
-                if response.response?.statusCode == 200 {
-                    let data = responseJSON["locations"] as! [[String:Any]]
-                    for x in data {
-                        let location = Sitio(id: x["id"] as! Int,
-                                             titulo: x["name"] as! String,
-                                             descripcion: (x["description"] as? String)!,
-                                             dateDesde: x["start_date"] as! String,
-                                             dateHasta: x["end_date"] as! String,
-                                             longitude: x["x_coordinate"] as! Double,
-                                             latitude: x["y_coordinate"] as! Double)
-                        self.sitios.append(location)
-                        for sitio in self.sitios {
-                            self.marcar(longitude: sitio.longitude!, latitude: sitio.latitude!, titulo: sitio.titulo!, description: sitio.descripcion!)
+                if response.result.value != nil {
+                    let responseJSON = response.result.value as! [String: Any]
+                    if response.response?.statusCode == 200 {
+                        let data = responseJSON["locations"] as! [[String:Any]]
+                        for x in data {
+                            let location = Sitio(id: x["id"] as! Int,
+                                                 titulo: x["name"] as! String,
+                                                 descripcion: (x["description"] as? String)!,
+                                                 dateDesde: x["start_date"] as! String,
+                                                 dateHasta: x["end_date"] as! String,
+                                                 longitude: x["x_coordinate"] as! Double,
+                                                 latitude: x["y_coordinate"] as! Double)
+                            self.sitios.append(location)
+                            for sitio in self.sitios {
+                                self.marcar(longitude: sitio.longitude!, latitude: sitio.latitude!, titulo: sitio.titulo!, description: sitio.descripcion!)
+                            }
                         }
                     }
                 }
+                
             }
         
     }
@@ -61,8 +68,6 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     func marcar(longitude: Double, latitude: Double, titulo: String, description: String){
         let span = MKCoordinateSpanMake(2, 2)
         let localizacion = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let region = MKCoordinateRegion(center: localizacion, span: span)
-        mapa.setRegion(region, animated: true)
         
         //marcador
         let anotacion = MKPointAnnotation()
@@ -71,25 +76,8 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         anotacion.title = titulo
         anotacion.subtitle = description
         mapa.addAnnotation(anotacion)
-        
-        
+ 
     }
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is MKPinAnnotationView else { return nil}
-        
-        let identifier = "Annotation"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-        
-        if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView!.canShowCallout = true
-        } else {
-            annotationView!.annotation = annotation
-        }
-        return annotationView
-    }
-    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let _: CLLocationCoordinate2D = manager.location?.coordinate else { return }

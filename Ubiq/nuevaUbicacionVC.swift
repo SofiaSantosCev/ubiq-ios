@@ -33,8 +33,6 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
         textView.layer.cornerRadius = 5.0
         btn.layer.cornerRadius = 15
         setMapview()
-        
-        
     }
     
     //Convierte la fecha seleccionada en el datePicker a string y la guarda en una variable externa
@@ -58,31 +56,29 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
         ]
         
         let parameters: Parameters = ["name" : titulo.text!,
-                          "description" : textView.text!,
-                          "x_coordinate" : longitude,
-                          "y_coordinate" : latitude,
-                          "start_date" : dateInicio!,
-                          "end_date" : dateFin!]
+                                      "description" : textView.text!,
+                                      "x_coordinate" : longitude,
+                                      "y_coordinate" : latitude,
+                                      "start_date" : dateInicio!,
+                                      "end_date" : dateFin!]
         
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/location", method: .post, parameters: parameters, encoding: URLEncoding.httpBody, headers:headers)
             .responseJSON { response in
                 let responseJson = response.result.value! as! [String : Any]
-                self.id = responseJson["data"] as! Int
+                self.id = responseJson["data"] as? Int
                 if response.response?.statusCode == 200 {
-                    self.performSegue(withIdentifier: "create", sender: self)
-                    if let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "Lista") as? ViewController {
-                        let navController = UINavigationController(rootViewController: secondViewController)
-                        navController.setViewControllers([secondViewController], animated:true)
-                        secondViewController.setFrontViewController(navController, animated: true)
+                    let alert = UIAlertController(title: "Location created", message: "", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+                    self.present(alert,animated: true)
                 } else {
-                    let alert = UIAlertController(title: "Error", message: "don't know why", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Error", message: "something went wrong", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
                     self.present(alert,animated: true)
                 }
         }
     }
     
-    //Configura y el longpressgesture recognizer en el map
+    //Configura y el longpressgesturerecognizer en el map
     func setMapview(){
         let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(gestureReconizer:)))
         lpgr.minimumPressDuration = 0.5
@@ -101,15 +97,12 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
             latitudeField.text = String(latitude)
             
             marcar(longitude: longitude, latitude: latitude)
-            
         }
     }
     
     func marcar(longitude: Double, latitude: Double){
         let span = MKCoordinateSpanMake(0.02, 0.02)
         let localizacion = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
-        
-       
         let region = MKCoordinateRegion(center: localizacion, span: span)
         map.setRegion(region, animated: true)
         
@@ -118,18 +111,7 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
         anotacion.coordinate.latitude = latitude
         anotacion.coordinate.longitude = longitude
         map.addAnnotation(anotacion)
-    }
-    
-    //Enviar datos a la pantalla detalleVC
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is DetalleVC {
-            let destination = segue.destination as! DetalleVC
-            
-            let sitio = Sitio(id: id!, titulo: self.titulo.text!, descripcion: self.textView.text, dateDesde: self.dateInicio!, dateHasta: self.dateFin!, longitude: self.longitude, latitude: self.latitude)
-           
-            destination.sitio = sitio
-            
-        }
+        
     }
     
 }

@@ -18,6 +18,9 @@ class misSitiosTVC: UITableViewController {
         self.view.addSubview((label)!)
     }
     
+    @IBAction func unwindToList(_ segue: UIStoryboardSegue) {
+        listaSitios()
+    }
     override func viewWillAppear(_ animated: Bool) {
         listaSitios()
     }
@@ -31,25 +34,28 @@ class misSitiosTVC: UITableViewController {
         
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/location", method: .get, headers: headers)
             .responseJSON { response in
-                let responseJSON = response.result.value as! [String: Any]
-                if response.response?.statusCode == 200 {
-                    let data = responseJSON["locations"] as! [[String:Any]]
-                    for x in data {
-                        let location = Sitio(id: x["id"] as! Int,
-                                             titulo: x["name"] as! String,
-                                             descripcion: (x["description"] as? String)!,
-                                             dateDesde: x["start_date"] as! String,
-                                             dateHasta: x["end_date"] as! String,
-                                             longitude: x["x_coordinate"] as! Double,
-                                             latitude: x["y_coordinate"] as! Double) 
-                        self.sitios.append(location)
-                        self.tableView.reloadData()
-                    }
-                    
-                    if !self.sitios.isEmpty {
-                        self.label?.isHidden = true
+                if response.result.value != nil {
+                    let responseJSON = response.result.value as! [String: Any]
+                    if response.response?.statusCode == 200 {
+                        let data = responseJSON["locations"] as! [[String:Any]]
+                        for x in data {
+                            let location = Sitio(id: x["id"] as! Int,
+                                                 titulo: x["name"] as! String,
+                                                 descripcion: (x["description"] as? String)!,
+                                                 dateDesde: x["start_date"] as! String,
+                                                 dateHasta: x["end_date"] as! String,
+                                                 longitude: x["x_coordinate"] as! Double,
+                                                 latitude: x["y_coordinate"] as! Double)
+                            self.sitios.append(location)
+                            self.tableView.reloadData()
+                        }
+                        
+                        if !self.sitios.isEmpty {
+                            self.label?.isHidden = true
+                        }
                     }
                 }
+                
         }
     }
     

@@ -38,9 +38,9 @@ class DetalleVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate 
     
     func marcar(longitude: Double, latitude: Double){
         map.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude),
-                                         span: MKCoordinateSpanMake(0.02, 0.02)),
+                                         span: MKCoordinateSpanMake(0.2, 0.2)),
                                         animated: true)
-        
+
         //marcador
         let anotacion = MKPointAnnotation()
         anotacion.coordinate.latitude = latitude
@@ -49,18 +49,34 @@ class DetalleVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate 
     }
 
     @IBAction func deleteSpot(_ sender: Any) {
-        var id = "\(sitio?.id)"
+        let alert = UIAlertController(title: "Are you sure?", message: "This action is irreversible", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+            self.delete()
+            self.performSegue(withIdentifier: "deleted", sender: sender)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true)
+        
+    }
+    
+    func delete(){
+        let id = String(sitio!.id)
+        print(id)
         let headers: HTTPHeaders = [
             "Authorization":UserDefaults.standard.object(forKey: "token") as! String
         ]
         
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/location/"+id, method: .delete,headers: headers).responseJSON { response in
+            
+            print(response.response?.statusCode)
             if response.response?.statusCode == 200 {
                 print("Spot deleted")
+                
             }
             
         }
-        
     }
     
 
