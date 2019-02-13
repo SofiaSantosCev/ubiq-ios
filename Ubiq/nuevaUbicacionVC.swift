@@ -100,6 +100,7 @@ UINavigationControllerDelegate, UIGestureRecognizerDelegate {
         }
     }
     
+    //Añade un pin con los parametros introducidos
     func marcar(longitude: Double, latitude: Double){
         let span = MKCoordinateSpanMake(0.02, 0.02)
         let localizacion = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)

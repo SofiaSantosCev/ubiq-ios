@@ -9,6 +9,7 @@ class LoginVC: UIViewController {
     @IBOutlet weak var password: UITextField!
     var isLoggedIn:Bool = true
     
+    //Personaliza un boton
     override func viewDidLoad() {
         super.viewDidLoad()
         loginBtn.layer.cornerRadius = 15
@@ -20,12 +21,14 @@ class LoginVC: UIViewController {
         
     }
     
+    //Alert personalizado
     func showAlert(title: String, message: String){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
         self.present(alert,animated: true)
     }
 
+    //Login de usuario y guarda token y user id en userDefaults. Muestra un alert en caso de error
     func peticionPost(sender: Any){
         let parameters = ["email" : email.text!,
                           "password" : password.text!]

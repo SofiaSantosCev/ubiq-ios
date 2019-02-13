@@ -48,6 +48,7 @@ class DetalleVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate 
         map.addAnnotation(anotacion)
     }
 
+    //Boton para borrar un spot
     @IBAction func deleteSpot(_ sender: Any) {
         let alert = UIAlertController(title: "Are you sure?", message: "This action is irreversible", preferredStyle: .alert)
         
@@ -61,6 +62,7 @@ class DetalleVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate 
         
     }
     
+    //Funcion que llama a la peticion delete 
     func delete(){
         let id = String(sitio!.id)
         print(id)
@@ -69,11 +71,9 @@ class DetalleVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate 
         ]
         
         Alamofire.request("http://localhost:8888/ubiq/public/index.php/api/location/"+id, method: .delete,headers: headers).responseJSON { response in
-            
             print(response.response?.statusCode)
             if response.response?.statusCode == 200 {
                 print("Spot deleted")
-                
             }
             
         }

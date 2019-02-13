@@ -8,6 +8,7 @@
 
 import UIKit
 
+//Clase creada para personalizar los botones del Tab bar
 class tabBarItem: UITabBarItem {
     
     override func awakeFromNib() {

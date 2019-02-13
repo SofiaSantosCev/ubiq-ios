@@ -18,12 +18,14 @@ class RegisterVC: UIViewController {
         peticionPost(sender: sender)
     }
     
+    //Metodo para personalizar alerts
     func showAlert(title: String, message: String){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
         self.present(alert,animated: true)
     }
 
+    //Registra un usuario y muestra un alert en caso de error
     func peticionPost(sender: Any?){
         let parameters = ["name" : name.text!,
                           "email" : email.text!,

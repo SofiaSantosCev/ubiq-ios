@@ -9,6 +9,8 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     @IBOutlet weak var mapa: MKMapView!
     let manager = CLLocationManager()
     var sitios = [Sitio]()
+    
+    //Pide permisos de localizacion al usuario. Obtiene una lista de sitios de la base de datos
     override func viewDidLoad() {
         super.viewDidLoad()
         manager.delegate = self
@@ -23,9 +25,9 @@ class MapaVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         mapa.delegate = self
         listaSitios()
         
-        
     }
     
+    //Obtiene una lista de sitios de la BBDD
     override func viewWillAppear(_ animated: Bool) {
         listaSitios()
     }

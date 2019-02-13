@@ -12,6 +12,7 @@ class PerfilVC: UIViewController {
     var user_id = UserDefaults.standard.string(forKey: "user_id")
     var token = UserDefaults.standard.string(forKey: "token")
     
+    //Configura la vista del boton
     override func viewDidLoad() {
         super.viewDidLoad()
         peticionGet()

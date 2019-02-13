@@ -21,6 +21,7 @@ class misSitiosTVC: UITableViewController {
     @IBAction func unwindToList(_ segue: UIStoryboardSegue) {
         listaSitios()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         listaSitios()
     }
@@ -63,14 +64,17 @@ class misSitiosTVC: UITableViewController {
         return 1
     }
 
+    //Determina el tamaño de la lista según la cantidad de elementos que contenga el array "sitios"
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sitios.count
     }
     
+    //Altura de la celda
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100.0
     }
     
+    //Introduce los datos en cada una de las celdas
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "celda", for: indexPath) as! misSitiosTVCell
         
